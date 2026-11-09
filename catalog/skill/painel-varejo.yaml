@@ -14,6 +14,7 @@ preview:
   src: /prints/painel-varejo.webp
   alt: "Parte do painel de varejo com o mapa de calor de venda por dia da semana e hora, e as barras de venda por departamento."
   caption: "Exemplo do painel que a skill entrega com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
 tags: [cd2-super, painel, operacao]
 launched_at: 2026-11-09
 updated_at: 2026-11-09

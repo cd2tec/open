@@ -14,6 +14,7 @@ preview:
   src: /prints/relatorio-precos.webp
   alt: "Relatório de custo sem repasse com 128 produtos que subiram de custo sem mudar de preço, os totais e a leitura."
   caption: "Exemplo do relatório que a skill entrega com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
 tags: [cd2-super, relatorio, precos]
 launched_at: 2026-11-09
 updated_at: 2026-11-09

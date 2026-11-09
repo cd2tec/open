@@ -13,6 +13,7 @@ import {
   getEntries,
   matches,
   type Audience,
+  type ResourceType,
   type ShelfKey,
 } from '../lib/catalog';
 
@@ -35,6 +36,9 @@ export async function getStaticPaths() {
 const { entries, publico, tipo } = Astro.props;
 const isHome = !publico && !tipo;
 const featured = entries.filter((e) => e.featured);
+// Cada coluna dos Destaques gira a sua própria lista, então nunca aparecem três coisas do mesmo tipo.
+const slotTypes: ResourceType[][] = [['miniapp'], ['software', 'plugin'], ['skill']];
+const highlights = slotTypes.map((types) => featured.filter((e) => types.includes(e.type))).filter((s) => s.length > 0);
 
 const title = isHome
   ? 'CD2 Open: ferramentas gratuitas para quem faz varejo'
@@ -82,17 +86,39 @@ const description = isHome
             </div>
           </section>
 
-          {featured.length > 0 && (
+          {highlights.length > 0 && (
             <section class="wrap pt-14">
               <h2 class="text-2xl font-extrabold tracking-tight">Destaques</h2>
               <ul class="mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {featured.map((entry) => (
-                  <li class="relative">
-                    {entry.slug === 'ia-de-bolso' && <GameTrigger />}
-                    <Card entry={entry} />
+                {highlights.map((slot, column) => (
+                  <li class="relative" data-highlight-slot>
+                    {column === 1 && <GameTrigger />}
+                    {slot.map((entry, i) => (
+                      <div class="h-full" data-highlight hidden={i > 0}>
+                        <Card entry={entry} />
+                      </div>
+                    ))}
                   </li>
                 ))}
               </ul>
+              {/* Roda antes de pintar, para o card da entrada anterior não piscar na tela. */}
+              <script is:inline>
+                (function () {
+                  var visit = 0;
+                  try {
+                    visit = parseInt(localStorage.getItem('cd2-destaques') || '0', 10) || 0;
+                    localStorage.setItem('cd2-destaques', String(visit + 1));
+                  } catch (e) {
+                    visit = Math.floor(Math.random() * 1000);
+                  }
+                  document.querySelectorAll('[data-highlight-slot]').forEach(function (slot) {
+                    var cards = slot.querySelectorAll('[data-highlight]');
+                    cards.forEach(function (card, i) {
+                      card.hidden = i !== visit % cards.length;
+                    });
+                  });
+                })();
+              </script>
             </section>
           )}
         </>

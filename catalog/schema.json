@@ -95,7 +95,7 @@
       }
     },
     "featured": {
-      "description": "Destaque manual da home, no máximo 3 no catálogo inteiro.",
+      "description": "Entra no rodízio dos Destaques da home.",
       "type": "boolean"
     },
     "tags": {

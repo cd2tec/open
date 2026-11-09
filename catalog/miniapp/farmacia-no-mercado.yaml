@@ -10,6 +10,7 @@ preview:
   src: /prints/farmacia-no-mercado.webp
   alt: "Resultado da calculadora de farmácia no mercado, com R$ 246,9 mil de venda por mês para empatar, custo mensal de R$ 51.850 e o checklist do que a lei pede."
   caption: "Resultado com a loja de exemplo da própria calculadora. Números fictícios."
+featured: true
 tags: [farmacia, supermercado, lei-15357, viabilidade]
 launched_at: 2026-11-09
 updated_at: 2026-11-09

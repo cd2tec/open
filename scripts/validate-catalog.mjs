@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Uso: node scripts/validate-catalog.mjs [pasta-do-catalogo]
 // Além do schema, confere o que JSON Schema não enxerga: arquivo x conteúdo,
-// duplicidade entre arquivos, limite de destaques e travessão.
+// duplicidade entre arquivos e travessão.
 import { readdirSync, readFileSync } from 'node:fs';
 import { basename, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,7 +9,6 @@ import { parse } from 'yaml';
 import { validateEntry } from '../src/lib/catalog-validator.mjs';
 
 const root = resolve(process.argv[2] ?? fileURLToPath(new URL('../catalog', import.meta.url)));
-const MAX_FEATURED = 3;
 
 const errors = [];
 const seen = { slug: new Map(), url: new Map() };
@@ -49,7 +48,6 @@ for (const { label, includes } of combos) {
   }
 }
 
-if (featured > MAX_FEATURED) errors.push(`catálogo: ${featured} destaques, o máximo é ${MAX_FEATURED}`);
 if (total === 0) errors.push('catálogo: nenhuma entrada encontrada');
 
 if (errors.length > 0) {
@@ -58,4 +56,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`Catálogo ok: ${total} entradas, ${featured} em destaque.`);
+console.log(`Catálogo ok: ${total} entradas, ${featured} no rodízio de destaques.`);

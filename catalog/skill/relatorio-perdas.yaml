@@ -14,6 +14,7 @@ preview:
   src: /prints/relatorio-perdas.webp
   alt: "Relatório de quebras com validade explicando 40% das perdas, os totais por motivo e a leitura."
   caption: "Exemplo do relatório que a skill entrega com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
 tags: [cd2-super, relatorio, perdas]
 launched_at: 2026-11-09
 updated_at: 2026-11-09

@@ -14,6 +14,7 @@ preview:
   src: /prints/relatorio-fiscal.webp
   alt: "Relatório fiscal com 17 notas de entrada que não fecham com os itens, os totais e a leitura."
   caption: "Exemplo do relatório que a skill entrega com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
 tags: [cd2-super, relatorio, fiscal]
 launched_at: 2026-11-09
 updated_at: 2026-11-09

@@ -14,6 +14,7 @@ preview:
   src: /prints/relatorio-financeiro.webp
   alt: "Relatório de contas a pagar com R$ 612.300,00 vencendo em 7 dias, os totais e a leitura."
   caption: "Exemplo do relatório que a skill entrega com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
 tags: [cd2-super, relatorio, financeiro]
 launched_at: 2026-11-09
 updated_at: 2026-11-09

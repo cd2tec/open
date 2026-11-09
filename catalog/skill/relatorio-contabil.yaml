@@ -14,6 +14,7 @@ preview:
   src: /prints/relatorio-contabil.webp
   alt: "Resultado gerencial com R$ 75.000,00 de resultado sobre R$ 1,6 milhão de receita, os totais e a leitura."
   caption: "Exemplo do relatório que a skill entrega com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
 tags: [cd2-super, relatorio, contabil]
 launched_at: 2026-11-09
 updated_at: 2026-11-09

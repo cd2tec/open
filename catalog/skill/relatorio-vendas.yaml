@@ -14,6 +14,7 @@ preview:
   src: /prints/relatorio-vendas.webp
   alt: "Relatório de curva ABC com o achado de que 386 produtos fazem 80% da venda, os totais por classe e a leitura."
   caption: "Exemplo do relatório que a skill entrega com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
 tags: [cd2-super, relatorio, vendas]
 launched_at: 2026-11-09
 updated_at: 2026-11-09

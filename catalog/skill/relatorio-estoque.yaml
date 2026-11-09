@@ -14,6 +14,7 @@ preview:
   src: /prints/relatorio-estoque.webp
   alt: "Relatório de cobertura e ruptura com 63 itens da classe A acabando em menos de 3 dias, os totais e a leitura."
   caption: "Exemplo do relatório que a skill entrega com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
 tags: [cd2-super, relatorio, estoque]
 launched_at: 2026-11-09
 updated_at: 2026-11-09

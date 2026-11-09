@@ -1,0 +1,20 @@
+slug: custo-vrva
+type: skill
+name: Quanto o VR/VA custa de verdade
+tagline: Mostra o custo real do vale-refeição e do vale-alimentação para a sua empresa.
+audience: [negocio]
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude-code, cowork, codex, chatgpt]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/custo-vrva
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/custo-vrva.webp
+  alt: "Página entregue pela skill de custo de VR e VA, com R$ 1.576,67 por mês acima do decreto e o detalhe por bandeira."
+  caption: "Exemplo da página que a skill entrega. Loja e números fictícios."
+tags: [cd2-super, vale-refeicao, vale-alimentacao, decreto-12712]
+launched_at: 2026-11-07
+updated_at: 2026-11-09
+owner: gabriel

@@ -1,0 +1,20 @@
+slug: escala-5x2
+type: miniapp
+name: Calculadora de Impacto do Fim da 6x1
+tagline: Quantas pessoas a mais e quanto custa migrar para 5x2, por setor, sem cadastro.
+audience: [negocio]
+status: stable
+license: gratuita-fechada
+url: https://calc-fim-escala6x1.cd2.com.br
+pro:
+  label: Quer isso integrado ao seu ERP?
+  url: https://cd2.com.br/contato
+featured: true
+preview:
+  src: /prints/escala-5x2.webp
+  alt: "Resultado da calculadora de impacto do fim da 6x1, com 176 horas a menos por semana, de 5 a 8 pessoas a mais e a situação de cada setor."
+  caption: "Resultado com a loja de exemplo da própria calculadora. Números fictícios."
+tags: [escala, rh, ec-141, supermercado]
+launched_at: 2026-11-05
+updated_at: 2026-11-08
+owner: gabriel

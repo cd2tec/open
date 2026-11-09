@@ -1,0 +1,20 @@
+slug: fim-escala-6x1
+type: skill
+name: Fim da escala 6x1
+tagline: Calcula o impacto do fim da escala 6x1 na folha e na operação da sua loja.
+audience: [negocio]
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude-code, cowork, codex, chatgpt]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/fim-escala-6x1
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/fim-escala-6x1.webp
+  alt: "Página entregue pela skill do fim da 6x1, com alerta de 4 setores no vermelho, a contagem de dias e o custo nas duas situações."
+  caption: "Exemplo da página que a skill entrega. Loja e números fictícios."
+tags: [cd2-super, escala, ec-141, jornada]
+launched_at: 2026-11-07
+updated_at: 2026-11-09
+owner: gabriel

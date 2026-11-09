@@ -1,0 +1,16 @@
+slug: va-vr
+type: miniapp
+name: Quanto o VR/VA me custa de verdade
+tagline: Quanto o VR e o VA custam de verdade para a sua loja, pelo Decreto 12.712/2025, sem cadastro.
+audience: [negocio]
+status: beta
+license: gratuita-fechada
+url: https://calc-vrva.cd2.com.br
+preview:
+  src: /prints/va-vr.webp
+  alt: "Resultado da calculadora de VR e VA, com R$ 1,6 mil por mês acima do decreto, taxa acima do teto, dinheiro parado e a situação de cada bandeira."
+  caption: "Resultado com a loja de exemplo da própria calculadora. Números fictícios."
+tags: [vale-refeicao, vale-alimentacao, taxas, decreto-12712]
+launched_at: 2026-11-06
+updated_at: 2026-11-08
+owner: gabriel

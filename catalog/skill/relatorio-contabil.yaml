@@ -1,0 +1,20 @@
+slug: relatorio-contabil
+type: skill
+name: Relatório contábil
+tagline: Confere balancete, razão e lançamentos, como relatório gerencial e não escrituração oficial.
+audience: [negocio]
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude-code, cowork, codex, chatgpt]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/relatorio-contabil
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/relatorio-contabil.webp
+  alt: "Resultado gerencial com R$ 75.000,00 de resultado sobre R$ 1,6 milhão de receita, os totais e a leitura."
+  caption: "Exemplo do relatório que a skill entrega com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+tags: [cd2-super, relatorio, contabil]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

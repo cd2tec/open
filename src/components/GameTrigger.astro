@@ -1,0 +1,40 @@
+---
+import { ROBO_SVG } from '../lib/robo';
+---
+
+<button
+  type="button"
+  class="game-trigger"
+  aria-label="Jogar com o robozinho da IA de Bolso"
+  data-game-trigger
+  data-track="jogo_iniciado"
+>
+  <span class="game-bubble" aria-hidden="true" data-game-bubble>Psiu! Clica em mim</span>
+  <Fragment set:html={ROBO_SVG} />
+</button>
+
+<script>
+  const trigger = document.querySelector<HTMLElement>('[data-game-trigger]');
+  const bubble = document.querySelector<HTMLElement>('[data-game-bubble]');
+
+  if (trigger && bubble) {
+    // O relógio do balão só começa quando o robô está na tela, e ele aparece uma vez só.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        trigger.classList.add('talk');
+        observer.disconnect();
+      },
+      { threshold: 1 },
+    );
+    observer.observe(trigger);
+    bubble.addEventListener('animationend', () => bubble.remove());
+
+    trigger.addEventListener('click', async () => {
+      observer.disconnect();
+      bubble.remove();
+      const { startGame } = await import('../lib/platform-game');
+      startGame(trigger);
+    });
+  }
+</script>

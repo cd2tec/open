@@ -1,0 +1,19 @@
+slug: ia-de-bolso
+type: software
+name: CD2 IA de Bolso
+tagline: A IA da CD2 rodando 100% no seu computador, direto do pen drive, sem instalar nada e sem mandar dados para a nuvem.
+audience: [negocio, tecnico]
+status: beta               # o README do projeto declara "Experimental"
+license: Apache-2.0
+url: https://cd2tec.github.io/cd2-ia-de-bolso/
+repo: https://github.com/cd2tec/cd2-ia-de-bolso
+docs: https://github.com/cd2tec/cd2-ia-de-bolso/blob/main/docs/criar-pendrive.md
+featured: true
+preview:
+  src: /prints/ia-de-bolso.webp
+  alt: "Tela da IA de Bolso com consultas salvas à esquerda e, na conversa, um gráfico de vendas por mês em 2026."
+  caption: "A IA de Bolso rodando no computador, em modo demonstração. Dados fictícios."
+tags: [ia-local, pen-drive, privacidade]
+launched_at: 2026-10-12
+updated_at: 2026-11-04
+owner: gabriel

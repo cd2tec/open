@@ -1,0 +1,67 @@
+---
+import '../styles/global.css';
+import CookieConsent from '../components/CookieConsent.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="icon" href="/brand/simbolo.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/Manrope-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#f2f2f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="CD2 Open" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body>
+    <header class="wrap flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-4">
+      <a href="/" class="inline-flex items-center gap-3 no-underline" aria-label="CD2 Open, início">
+        <picture>
+          <source srcset="/brand/cd2tech-horizontal-white.svg" media="(prefers-color-scheme: dark)" />
+          <img src="/brand/cd2tech-horizontal.svg" alt="" width="137" height="32" class="h-8 w-auto" />
+        </picture>
+        <span class="rounded-full bg-retail px-3 py-0.5 text-sm font-bold text-human">Open</span>
+      </a>
+      <nav aria-label="Principal" class="flex gap-5 font-semibold">
+        <a href="/#catalogo" class="text-ink no-underline hover:underline">Catálogo</a>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="wrap mt-20 border-t border-line py-10 text-ink-soft">
+      <div class="grid gap-6 md:grid-cols-[1fr_auto] md:items-start">
+        <div class="max-w-[62ch] space-y-2">
+          <p>A marca e os logos da CD2 têm todos os direitos reservados.</p>
+          <button type="button" class="cookies-link" data-cookies-open hidden>Ver detalhes dos cookies</button>
+        </div>
+        <p class="font-semibold">
+          <a href="https://cd2.com.br">Conheça a CD2 em cd2.com.br</a>
+        </p>
+      </div>
+      <p class="mt-6 text-sm">CD2 Tech, {year}</p>
+    </footer>
+
+    <CookieConsent />
+  </body>
+</html>

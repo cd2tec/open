@@ -1,0 +1,90 @@
+---
+import type { CatalogEntry } from '../content.config';
+import { AGENTS, AUDIENCES, STATUS_LABELS, TYPES, type Audience } from '../lib/catalog';
+
+interface Props {
+  entry: CatalogEntry;
+  headingTag?: 'h3' | 'h4';
+  wide?: boolean;
+}
+
+const { entry, headingTag: HeadingTag = 'h3', wide = false } = Astro.props;
+const info = TYPES[entry.type];
+const status = STATUS_LABELS[entry.status];
+const agents = entry.works_with ?? [];
+const preview = entry.preview;
+const combo = entry.includes?.length;
+const facts = [combo ? `${info.singular}: combo de ${combo} skills` : info.singular, ...entry.audience.map((a) => AUDIENCES[a as Audience].label)];
+if (status) facts.push(status);
+---
+
+<article
+  class:list={[
+    'flex h-full flex-col overflow-hidden rounded-xl bg-surface',
+    wide ? 'card-wide border-2 border-rail md:flex-row' : 'border border-line',
+  ]}
+  data-card
+  data-agents={agents.join(' ')}
+>
+  {
+    preview && (
+      <a
+        class="card-thumb"
+        href={preview.src}
+        tabindex="-1"
+        aria-hidden="true"
+        data-preview
+        data-track="print_aberto"
+        data-recurso={entry.slug}
+        data-origem="miniatura"
+        data-title={entry.name}
+        data-alt={preview.alt}
+        data-caption={preview.caption}
+      >
+        <img src={preview.src.replace('/prints/', '/prints/thumb/')} alt="" width="640" height="400" loading="lazy" decoding="async" />
+        <span class="card-thumb-tag">Dados fictícios</span>
+      </a>
+    )
+  }
+  <div class="flex flex-1 flex-col gap-2 p-5">
+    <ul class="flex flex-wrap gap-x-3 text-sm font-semibold text-ink-soft">
+      {facts.map((fact) => <li>{fact}</li>)}
+    </ul>
+    <HeadingTag class="text-xl leading-tight font-bold tracking-tight">{entry.name}</HeadingTag>
+    <p class="max-w-[60ch]">{entry.tagline}</p>
+    {
+      agents.length > 0 && (
+        <p class="text-sm text-ink-soft">Funciona com {agents.map((a) => AGENTS[a]).join(', ')}.</p>
+      )
+    }
+    {
+      entry.pro && (
+        <p class="mt-auto pt-1 text-sm">
+          <a href={entry.pro.url} data-track="contato_cd2" data-recurso={entry.slug}>{entry.pro.label}</a>
+        </p>
+      )
+    }
+    <div class:list={['flex flex-wrap items-center gap-x-4 gap-y-2 pt-3', { 'mt-auto': !entry.pro }]}>
+      <a class="btn btn-primary" href={entry.url} aria-label={`${info.action}: ${entry.name}`} data-track="recurso_aberto" data-recurso={entry.slug}>{info.action}</a>
+      {
+        preview && (
+          <a
+            class="btn btn-outline"
+            href={preview.src}
+            aria-haspopup="dialog"
+            aria-label={`Ver maior: ${entry.name}`}
+            data-preview
+            data-track="print_aberto"
+            data-recurso={entry.slug}
+            data-origem="botao"
+            data-title={entry.name}
+            data-alt={preview.alt}
+            data-caption={preview.caption}
+          >
+            Ver maior
+          </a>
+        )
+      }
+    </div>
+  </div>
+</article>

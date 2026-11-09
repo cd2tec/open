@@ -1,0 +1,42 @@
+<dialog class="preview" aria-labelledby="preview-title" data-preview-dialog>
+  <div class="preview-head">
+    <div>
+      <h2 id="preview-title" class="text-xl leading-tight font-bold tracking-tight" data-preview-title></h2>
+      <p class="mt-1 text-sm text-ink-soft" data-preview-caption></p>
+    </div>
+    <button type="button" class="chip shrink-0" data-preview-close>Fechar</button>
+  </div>
+  <div class="preview-body" tabindex="0" aria-label="Print do recurso em uso" data-preview-body>
+    <img alt="" data-preview-image />
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-preview-dialog]');
+
+  if (dialog && typeof dialog.showModal === 'function') {
+    const title = dialog.querySelector<HTMLElement>('[data-preview-title]')!;
+    const caption = dialog.querySelector<HTMLElement>('[data-preview-caption]')!;
+    const body = dialog.querySelector<HTMLElement>('[data-preview-body]')!;
+    const image = dialog.querySelector<HTMLImageElement>('[data-preview-image]')!;
+
+    // Sem JavaScript, o botão é um link comum para a imagem.
+    document.addEventListener('click', (event) => {
+      const link = (event.target as Element).closest<HTMLAnchorElement>('[data-preview]');
+      if (!link || event.metaKey || event.ctrlKey || event.shiftKey) return;
+      event.preventDefault();
+      title.textContent = link.dataset.title ?? '';
+      caption.textContent = link.dataset.caption ?? '';
+      image.alt = link.dataset.alt ?? '';
+      image.src = link.href;
+      dialog.showModal();
+      body.scrollTop = 0;
+    });
+
+    dialog.querySelector('[data-preview-close]')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('close', () => image.removeAttribute('src'));
+  }
+</script>

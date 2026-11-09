@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://open.cd2.com.br/catalog/schema.json",
+  "title": "Recurso do CD2 Open",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "slug",
+    "type",
+    "name",
+    "tagline",
+    "audience",
+    "status",
+    "license",
+    "url",
+    "launched_at",
+    "updated_at"
+  ],
+  "properties": {
+    "slug": {
+      "description": "Identificador estável. Renomear o recurso muda name, nunca slug.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "type": {
+      "enum": ["miniapp", "skill", "plugin", "software", "conteudo"]
+    },
+    "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+    "tagline": { "type": "string", "minLength": 10, "maxLength": 140 },
+    "audience": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["negocio", "tecnico"] }
+    },
+    "status": { "enum": ["stable", "beta", "archived"] },
+    "license": {
+      "description": "SPDX id, ou gratuita-fechada para uso gratuito com código fechado, que nunca é apresentado como aberto.",
+      "enum": ["MIT", "Apache-2.0", "CC-BY-4.0", "CC-BY-SA-4.0", "CC-BY-NC-ND-4.0", "gratuita-fechada"]
+    },
+    "license_note": {
+      "description": "Condição de uso em linguagem simples, exibida no card.",
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 140
+    },
+    "works_with": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": ["claude", "claude-code", "cowork", "chatgpt", "codex", "gemini", "ia-de-bolso"]
+      }
+    },
+    "url": {
+      "description": "Caminho sob open.cd2.com.br (/miniapps/x/) ou, até a migração, endereço externo atual (https://...).",
+      "type": "string",
+      "pattern": "^(/([a-z0-9-]+/)+|https://[^\\s]+)$"
+    },
+    "repo": {
+      "type": "string",
+      "pattern": "^https://github\\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+    },
+    "docs": { "type": "string", "pattern": "^https://[^\\s]+$" },
+    "release": {
+      "description": "Tag cujo build é publicado sob o open.",
+      "type": "string",
+      "minLength": 1
+    },
+    "pro": {
+      "description": "Único gancho comercial permitido: uma frase e um link.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "url"],
+      "properties": {
+        "label": { "type": "string", "minLength": 3, "maxLength": 80 },
+        "url": { "type": "string", "pattern": "^https://[^\\s]+$" }
+      }
+    },
+    "includes": {
+      "description": "Em um plugin, os slugs das skills que vêm no combo.",
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }
+    },
+    "preview": {
+      "description": "Print do recurso em uso, aberto no modal do card. Só com dados fictícios.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["src", "alt", "caption"],
+      "properties": {
+        "src": { "type": "string", "pattern": "^/prints/[a-z0-9-]+\\.webp$" },
+        "alt": { "type": "string", "minLength": 10, "maxLength": 200 },
+        "caption": { "type": "string", "minLength": 10, "maxLength": 140 }
+      }
+    },
+    "featured": {
+      "description": "Destaque manual da home, no máximo 3 no catálogo inteiro.",
+      "type": "boolean"
+    },
+    "tags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" }
+    },
+    "launched_at": { "type": "string", "format": "date" },
+    "updated_at": { "type": "string", "format": "date" },
+    "owner": { "type": "string", "minLength": 1 }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": ["license"],
+        "properties": { "license": { "const": "gratuita-fechada" } }
+      },
+      "then": { "not": { "required": ["repo"] } },
+      "else": { "required": ["repo"] }
+    },
+    {
+      "if": {
+        "required": ["license"],
+        "properties": { "license": { "const": "CC-BY-NC-ND-4.0" } }
+      },
+      "then": { "required": ["license_note"] }
+    },
+    {
+      "if": {
+        "required": ["type"],
+        "properties": { "type": { "enum": ["skill", "plugin"] } }
+      },
+      "then": {
+        "required": ["works_with"],
+        "properties": { "works_with": { "type": "array", "minItems": 1 } }
+      },
+      "else": {
+        "properties": { "works_with": { "type": "array", "maxItems": 0 } }
+      }
+    },
+    {
+      "if": {
+        "required": ["type", "url"],
+        "properties": {
+          "type": { "enum": ["miniapp", "software"] },
+          "url": { "type": "string", "pattern": "^/" }
+        }
+      },
+      "then": { "required": ["release"] }
+    }
+  ]
+}

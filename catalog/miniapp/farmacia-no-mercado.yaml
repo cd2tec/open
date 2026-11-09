@@ -1,0 +1,16 @@
+slug: farmacia-no-mercado
+type: miniapp
+name: Dá pra ter farmácia no meu mercado?
+tagline: Se a sua loja cumpre a Lei 15.357/2026, quantos farmacêuticos precisa e quanto vender para empatar, sem cadastro.
+audience: [negocio]
+status: beta
+license: gratuita-fechada
+url: https://calc-farmacia.cd2.com.br
+preview:
+  src: /prints/farmacia-no-mercado.webp
+  alt: "Resultado da calculadora de farmácia no mercado, com R$ 246,9 mil de venda por mês para empatar, custo mensal de R$ 51.850 e o checklist do que a lei pede."
+  caption: "Resultado com a loja de exemplo da própria calculadora. Números fictícios."
+tags: [farmacia, supermercado, lei-15357, viabilidade]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

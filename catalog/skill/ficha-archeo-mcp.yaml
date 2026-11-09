@@ -1,0 +1,20 @@
+slug: ficha-archeo-mcp
+type: skill
+name: Ficha de ferramenta do Archeo MCP Creator
+tagline: Prepara a ficha de uma ferramenta para cadastrar no Archeo MCP Creator da CD2, com o SQL e os parâmetros.
+audience: [tecnico]
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude-code, cowork, codex, chatgpt]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/ficha-archeo-mcp
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/ficha-archeo-mcp.webp
+  alt: "Ficha de cadastro de ferramenta com os campos do formulário do Archeo MCP Creator e o SQL pronto para colar."
+  caption: "Exemplo de ficha pronta para o Archeo MCP Creator, sobre um banco fictício."
+tags: [cd2-super, archeo, mcp, sql]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

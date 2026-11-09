@@ -1,0 +1,38 @@
+slug: cd2-super
+type: plugin
+name: Super para o varejo
+tagline: Calculadoras, relatórios e painel da CD2 no seu assistente de IA, com os dados do seu ERP conectados pelo Archeo MCP Creator.
+audience: [negocio, tecnico]
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude-code, cowork, codex, chatgpt]
+url: https://cd2tec.github.io/super/
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+pro:
+  label: Quer usar no dia a dia, com suporte? Fale com a CD2
+  url: https://cd2.com.br/contato
+featured: true
+preview:
+  src: /prints/cd2-super.webp
+  alt: "Painel do Super com o veredito do período, índice de saúde e os totalizadores de venda, ticket, cupons, margem e desconto."
+  caption: "Um dos painéis que o Super monta com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+includes:
+  # Na ordem em que aparecem: contas, relatórios, painel e, por último, a ficha.
+  - fim-escala-6x1
+  - custo-vrva
+  - relatorio-vendas
+  - relatorio-estoque
+  - relatorio-compras
+  - relatorio-precos
+  - relatorio-perdas
+  - relatorio-financeiro
+  - relatorio-fiscal
+  - relatorio-contabil
+  - painel-varejo
+  - ficha-archeo-mcp
+tags: [cd2-super, erp, archeo-mcp-creator, escala, vale-refeicao, vale-alimentacao, supermercado, relatorios]
+launched_at: 2026-11-07
+updated_at: 2026-11-09
+owner: gabriel

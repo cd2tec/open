@@ -1,0 +1,53 @@
+<div class="cookies" role="region" aria-label="Cookies" data-cookies hidden>
+  <p>
+    Usamos cookies 🍪
+    <button type="button" class="cookies-link" data-cookies-open>Ver detalhes</button>
+  </p>
+  <div class="cookies-actions">
+    <button type="button" class="btn btn-outline" data-cookies-choice="recusado">Recusar</button>
+    <button type="button" class="btn btn-primary" data-cookies-choice="aceito">Aceitar</button>
+  </div>
+</div>
+
+<dialog class="cookies-modal" aria-labelledby="cookies-title" data-cookies-dialog>
+  <h2 id="cookies-title" class="text-xl font-bold tracking-tight">Não existe almoço grátis 🫣</h2>
+  <p>
+    <b>Brincadeira!!!</b> A gente leva muito a sério a privacidade de quem se relaciona com a gente.
+  </p>
+  <p>Se você aceitar nossos docinhos 🍪 (os cookies), a gente fica sabendo só disto:</p>
+  <ul>
+    <li>por quais telas você passou e onde clicou;</li>
+    <li>o básico do navegador, como tipo de aparelho e cidade aproximada.</li>
+  </ul>
+  <p>Isso passa pelo Google, pela Meta e pelo LinkedIn, que ajudam a gente a medir e a divulgar o CD2 Open.</p>
+  <p class="text-sm text-ink-soft">Mudou de ideia? Esta janela abre de novo no rodapé do site.</p>
+  <div class="cookies-actions">
+    <button type="button" class="btn btn-outline" data-cookies-choice="recusado">Recusar</button>
+    <button type="button" class="btn btn-primary" data-cookies-choice="aceito">Aceitar os docinhos</button>
+  </div>
+</dialog>
+
+<script>
+  import { readCookieChoice, saveCookieChoice, startTagManager, trackClicks, type CookieChoice } from '../lib/gtm';
+
+  startTagManager();
+  trackClicks();
+
+  const banner = document.querySelector<HTMLElement>('[data-cookies]')!;
+  const dialog = document.querySelector<HTMLDialogElement>('[data-cookies-dialog]')!;
+
+  banner.hidden = readCookieChoice() !== null;
+
+  document.querySelectorAll<HTMLElement>('[data-cookies-open]').forEach((button) => {
+    button.hidden = false;
+    button.addEventListener('click', () => dialog.showModal());
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-cookies-choice]').forEach((button) => {
+    button.addEventListener('click', () => {
+      saveCookieChoice(button.dataset.cookiesChoice as CookieChoice);
+      banner.hidden = true;
+      if (dialog.open) dialog.close();
+    });
+  });
+</script>

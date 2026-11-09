@@ -337,6 +337,25 @@
     position: absolute;
   }
 
+  /* Durante o jogo o cursor vira mira de pixel; fora da mira só o que continua clicável. */
+  html.game-on,
+  html.game-on * {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='27' height='27' shape-rendering='crispEdges'%3E%3Cpath fill='%23000' d='M11 1h5v9h-5zM11 17h5v9h-5zM1 11h9v5H1zM17 11h9v5h-9zM11 11h5v5h-5z'/%3E%3Cpath fill='%23dbff2a' d='M12 2h3v7h-3zM12 18h3v7h-3zM2 12h7v3H2zM18 12h7v3h-7zM12 12h3v3h-3z'/%3E%3C/svg%3E") 13 13, crosshair !important;
+  }
+
+  html.game-on .game-hud,
+  html.game-on .game-hud *,
+  html.game-on .cookies,
+  html.game-on .cookies * {
+    cursor: default !important;
+  }
+
+  html.game-on .game-hud button,
+  html.game-on .cookies button,
+  html.game-on .cookies a {
+    cursor: pointer !important;
+  }
+
   .game-shot {
     position: absolute;
     top: 0;

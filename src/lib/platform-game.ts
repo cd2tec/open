@@ -16,9 +16,12 @@ const SHOT_LIFE = 1.1;
 const SHOT_COOLDOWN = 0.24;
 const SHOT_WIDTH = 21;
 const SHOT_HEIGHT = 18;
+const SHOT_MUZZLE = 30;
 const MAX_SHOTS = 5;
 const SHOOTABLE = 'h1 span, h2, h3, p, img, .btn, .chip, .card-thumb-tag, header a, footer a, a.chip';
 const NEVER_SHOOT = '.cookies, dialog, .game-hud, .game-trigger, [data-scene]';
+// Durante o jogo o clique é tiro; só estes continuam sendo clique de verdade.
+const STILL_CLICKABLE = '.game-hud, .cookies, dialog';
 
 const HEART = ['.rr.rr.', 'rwrrrrr', 'rrrrrrr', '.rrrrr.', '..rrr..', '...r...'];
 const HEART_COLORS: Record<string, string> = { r: '#e3172f', w: '#f2f2f2' };
@@ -73,7 +76,8 @@ interface Shot {
   el: HTMLElement;
   x: number;
   y: number;
-  direction: number;
+  dirX: number;
+  dirY: number;
   age: number;
 }
 
@@ -87,7 +91,7 @@ export function startGame(trigger: HTMLElement): void {
   hud.className = 'game-hud';
   hud.setAttribute('role', 'status');
   hud.innerHTML =
-    '<span>Setas andam, ↑ pula, segure ↑ para voar, ↓ desce. Barra atira. Esc sai.</span>' +
+    '<span>Setas andam, ↑ pula, segure ↑ para voar, ↓ desce. Barra ou clique atira. Esc sai.</span>' +
     '<button type="button" class="chip">Sair</button>';
 
   const filters = document.createElement('div');
@@ -118,6 +122,11 @@ export function startGame(trigger: HTMLElement): void {
   let targets: Target[] = [];
   const shots: Shot[] = [];
   let firing = false;
+  let keyQueued = false;
+  let mouseHeld = false;
+  let aimQueued = false;
+  let pointerX = 0;
+  let pointerY = 0;
   let cooldown = 0;
   let ground = 0;
   let last = performance.now();
@@ -152,13 +161,34 @@ export function startGame(trigger: HTMLElement): void {
     shots.splice(index, 1);
   };
 
-  const fire = () => {
+  // Com mira, o tiro sai do robô em direção ao ponteiro, e ele se vira para esse lado.
+  const fire = (aimed: boolean) => {
     const el = document.createElement('div');
     el.className = 'game-shot';
     el.innerHTML = HEART_SVG;
     document.body.append(el);
-    const startX = facing > 0 ? x + WIDTH : x - SHOT_WIDTH;
-    shots.push({ el, x: startX, y: y + 12, direction: facing, age: 0 });
+
+    const centerX = x + WIDTH / 2;
+    const centerY = y + 20;
+    let dirX = facing;
+    let dirY = 0;
+    if (aimed) {
+      const dx = pointerX + scrollX - centerX;
+      const dy = pointerY + scrollY - centerY;
+      const length = Math.hypot(dx, dy) || 1;
+      dirX = dx / length;
+      dirY = dy / length;
+      if (dx !== 0) facing = Math.sign(dx);
+    }
+
+    shots.push({
+      el,
+      x: centerX - SHOT_WIDTH / 2 + dirX * SHOT_MUZZLE,
+      y: centerY - SHOT_HEIGHT / 2 + dirY * SHOT_MUZZLE,
+      dirX,
+      dirY,
+      age: 0,
+    });
   };
 
   const sparkle = (centerX: number, centerY: number) => {
@@ -193,17 +223,24 @@ export function startGame(trigger: HTMLElement): void {
 
   const updateShots = (dt: number) => {
     cooldown = Math.max(0, cooldown - dt);
-    if (firing && cooldown === 0 && shots.length < MAX_SHOTS) {
-      fire();
+    const aiming = mouseHeld || aimQueued;
+    if ((firing || keyQueued || aiming) && cooldown === 0 && shots.length < MAX_SHOTS) {
+      fire(aiming);
       cooldown = SHOT_COOLDOWN;
+      keyQueued = false;
+      aimQueued = false;
     }
 
     for (let i = shots.length - 1; i >= 0; i--) {
       const shot = shots[i];
       shot.age += dt;
-      shot.x += shot.direction * SHOT_SPEED * dt;
+      shot.x += shot.dirX * SHOT_SPEED * dt;
+      shot.y += shot.dirY * SHOT_SPEED * dt;
+      // A ondulação é sempre de lado em relação ao caminho do coração.
       const wobble = Math.round(Math.sin(shot.age * 22) * 1.5) * 3;
-      shot.el.style.transform = `translate3d(${Math.round(shot.x)}px, ${Math.round(shot.y + wobble)}px, 0)`;
+      const drawX = Math.round(shot.x - shot.dirY * wobble);
+      const drawY = Math.round(shot.y + shot.dirX * wobble);
+      shot.el.style.transform = `translate3d(${drawX}px, ${drawY}px, 0)`;
 
       const right = shot.x + SHOT_WIDTH;
       const bottom = shot.y + SHOT_HEIGHT;
@@ -216,7 +253,13 @@ export function startGame(trigger: HTMLElement): void {
         transform(hit);
         sparkle(shot.x + SHOT_WIDTH / 2, shot.y + SHOT_HEIGHT / 2);
         removeShot(i);
-      } else if (shot.age > SHOT_LIFE || shot.x < -SHOT_WIDTH || shot.x > document.documentElement.clientWidth) {
+      } else if (
+        shot.age > SHOT_LIFE ||
+        shot.x < -SHOT_WIDTH ||
+        shot.x > document.documentElement.clientWidth ||
+        shot.y < -SHOT_HEIGHT ||
+        shot.y > ground
+      ) {
         removeShot(i);
       }
     }
@@ -327,8 +370,10 @@ export function startGame(trigger: HTMLElement): void {
     if (code === 'ArrowLeft') keys.left = down;
     else if (code === 'ArrowRight') keys.right = down;
     else if (code === 'ArrowDown') keys.down = down;
-    else if (code === 'Space') firing = down;
-    else if (code === 'ArrowUp') {
+    else if (code === 'Space') {
+      firing = down;
+      if (down && !event.repeat) keyQueued = true;
+    } else if (code === 'ArrowUp') {
       if (down && !event.repeat) {
         wantsJump = true;
         jumpHeld = true;
@@ -346,10 +391,47 @@ export function startGame(trigger: HTMLElement): void {
   const onKeyDown = onKey(true);
   const onKeyUp = onKey(false);
 
+  const trackPointer = (event: PointerEvent) => {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+  };
+
+  const isRealClick = (event: Event) =>
+    Boolean((event.target as Element | null)?.closest?.(STILL_CLICKABLE)) || Boolean(document.querySelector('dialog[open]'));
+
+  // Tudo em captura, antes de o clique chegar em link, botão ou produto da gôndola.
+  const onPointerDown = (event: PointerEvent) => {
+    if (isRealClick(event)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.button !== 0 || event.ctrlKey) return;
+    trackPointer(event);
+    mouseHeld = true;
+    aimQueued = true;
+  };
+
+  const onPointerMove = (event: PointerEvent) => {
+    trackPointer(event);
+    if (!(event.buttons & 1)) mouseHeld = false;
+  };
+
+  const onPointerUp = () => {
+    mouseHeld = false;
+  };
+
+  const blockMouse = (event: Event) => {
+    if (isRealClick(event)) return;
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   function releaseKeys() {
     Object.assign(keys, { left: false, right: false, down: false });
     jumpHeld = false;
     firing = false;
+    keyQueued = false;
+    mouseHeld = false;
+    aimQueued = false;
   }
 
   function stop() {
@@ -358,6 +440,12 @@ export function startGame(trigger: HTMLElement): void {
     removeEventListener('keyup', onKeyUp);
     removeEventListener('blur', releaseKeys);
     removeEventListener('resize', measure);
+    removeEventListener('pointerdown', onPointerDown, true);
+    removeEventListener('pointermove', onPointerMove);
+    removeEventListener('pointerup', onPointerUp);
+    removeEventListener('mousedown', blockMouse, true);
+    removeEventListener('click', blockMouse, true);
+    document.documentElement.classList.remove('game-on');
     sprite.remove();
     hud.remove();
     shots.forEach((shot) => shot.el.remove());
@@ -377,6 +465,12 @@ export function startGame(trigger: HTMLElement): void {
   addEventListener('keyup', onKeyUp);
   addEventListener('blur', releaseKeys);
   addEventListener('resize', measure);
+  addEventListener('pointerdown', onPointerDown, true);
+  addEventListener('pointermove', onPointerMove);
+  addEventListener('pointerup', onPointerUp);
+  addEventListener('mousedown', blockMouse, true);
+  addEventListener('click', blockMouse, true);
+  document.documentElement.classList.add('game-on');
 
   measure();
   frame = requestAnimationFrame(loop);

@@ -1,0 +1,295 @@
+---
+// Gôndola do hero, desenhada na mesma grade do robô (1 unidade = 4 px). O desenho sai pronto do build;
+// o JavaScript abaixo só cuida de arrastar os produtos.
+const WIDTH = 96;
+const HEIGHT = 72;
+const UNIT = 4;
+
+const COLORS: Record<string, string> = {
+  w: '#f2f2f2',
+  y: '#dbff2a',
+  g: '#a1a6ae',
+  s: '#8f8fff',
+  b: '#0000ff',
+  k: '#000000',
+};
+
+type Sprite = string[];
+
+const CARTON: Sprite = ['..ww..', '.wwww.', 'wwwwww', 'wwwwww', 'wbbbbw', 'wbyybw', 'wbbbbw', 'wwwwww', 'wwwwww'];
+const BOTTLE: Sprite = ['.gg.', '.gg.', '.ss.', 'ssss', 'ssss', 'swws', 'swws', 'ssss', 'ssss', 'ssss'];
+const CAN: Sprite = ['ggggg', 'wwwww', 'wyyyw', 'wyyyw', 'wwwww', 'ggggg'];
+const BOX: Sprite = ['yyyyyyy', 'ybbbbby', 'ybwwwby', 'ybbbbby', 'yyyyyyy', 'yyyyyyy', 'ywwwwwy', 'yyyyyyy', 'yyyyyyy', 'yyyyyyy'];
+const JAR: Sprite = ['ggggg', '.www.', 'wsssw', 'wssww', 'wwwww', 'wyyyw', 'wwwww'];
+const BAG: Sprite = ['s.s.s.s', 'sssssss', 'swwwwws', 'swbbbws', 'swbbbws', 'swwwwws', 'sssssss', 'sssssss'];
+const CART: Sprite = [
+  'gg................',
+  '.g....yyyy........',
+  '.g....ybby..ss....',
+  '.g....yyyy..ss....',
+  '.gwwwwwwwwwwwwwww.',
+  '.gw.w.w.w.w.w.w.w.',
+  '.gwwwwwwwwwwwwwww.',
+  '..gw.w.w.w.w.w.w..',
+  '..gwwwwwwwwwwwww..',
+  '...g...........g..',
+  '..gggggggggggggg..',
+  '...kk.......kk....',
+  '...kk.......kk....',
+];
+
+const recolor = (sprite: Sprite, swap: Record<string, string>): Sprite =>
+  sprite.map((row) => [...row].map((c) => swap[c] ?? c).join(''));
+
+const grid = Array.from({ length: HEIGHT }, () => Array<string>(WIDTH).fill('.'));
+
+function stamp(sprite: Sprite, x: number, y: number) {
+  sprite.forEach((row, j) =>
+    [...row].forEach((c, i) => {
+      if (c !== '.' && grid[y + j]?.[x + i] !== undefined) grid[y + j][x + i] = c;
+    }),
+  );
+}
+
+interface Product {
+  sprite: Sprite;
+  run: number;
+  x: number;
+  top: number;
+}
+
+const products: Product[] = [];
+const runs: [from: number, to: number, top: number][] = [];
+
+// Cada produto aparece em frentes repetidas, como na loja. As etiquetas ficam presas no trilho da prateleira.
+function stock(top: number, from: number, to: number, blocks: [Sprite, number][]) {
+  const run = runs.push([from, to, top]) - 1;
+  let x = from;
+  for (const [sprite, count] of blocks) {
+    const width = sprite[0].length;
+    const total = count * (width + 1) - 1;
+    if (x + total > to) break;
+    for (let i = 0; i < count; i++) products.push({ sprite, run, x: x + i * (width + 1), top });
+    stamp(['yyy', 'yyy'], x + Math.floor((total - 3) / 2), top);
+    x += total + 3;
+  }
+}
+
+const SHELVES = [22, 38, 54, 70];
+
+stock(SHELVES[0], 4, 93, [
+  [CARTON, 3],
+  [BOTTLE, 4],
+  [BOX, 2],
+  [recolor(CARTON, { b: 'g' }), 2],
+]);
+stock(SHELVES[1], 4, 93, [
+  [CAN, 5],
+  [JAR, 4],
+  [recolor(CAN, { y: 's' }), 4],
+]);
+stock(SHELVES[2], 4, 93, [
+  [BAG, 3],
+  [recolor(BOTTLE, { s: 'y' }), 4],
+  [BOX, 2],
+  [JAR, 2],
+]);
+// O vão na prateleira de baixo é onde o robô está repondo, e o carrinho cobre o final.
+stock(SHELVES[3], 4, 26, [[recolor(BOX, { y: 'w', w: 'y' }), 2]]);
+stock(SHELVES[3], 40, 70, [
+  [recolor(CAN, { y: 's' }), 2],
+  [JAR, 2],
+]);
+stamp(CART, 72, HEIGHT - CART.length);
+
+// Toldo listrado no topo, com a barra recortada.
+for (let x = 0; x < WIDTH; x++) {
+  const stripe = Math.floor(x / 6);
+  const light = stripe % 2 === 0;
+  const depth = x % 6 === 0 || x % 6 === 5 ? 6 : 8;
+  for (let y = 0; y < depth; y++) grid[y][x] = light ? 'w' : 's';
+}
+
+function toPaths(rows: ArrayLike<string>[]): string {
+  return Object.keys(COLORS)
+    .map((color) => {
+      let d = '';
+      for (let y = 0; y < rows.length; y++) {
+        const row = rows[y];
+        for (let x = 0; x < row.length; x++) {
+          if (row[x] !== color) continue;
+          let n = 1;
+          while (row[x + n] === color) n++;
+          d += `M${x} ${y}h${n}v1h-${n}z`;
+          x += n - 1;
+        }
+      }
+      return d ? `<path fill="${COLORS[color]}" d="${d}"/>` : '';
+    })
+    .join('');
+}
+
+const kinds = [...new Set(products.map((p) => p.sprite))];
+const defs = `<defs>${kinds.map((sprite, i) => `<g id="scene-p${i}">${toPaths(sprite)}</g>`).join('')}</defs>`;
+
+const items = products
+  .map(({ sprite, run, x, top }) => {
+    const kind = kinds.indexOf(sprite);
+    const w = sprite[0].length;
+    const h = sprite.length;
+    return (
+      `<g class="scene-item" transform="translate(${x} ${top - h})" data-run="${run}" data-kind="${kind}" data-x="${x}" data-w="${w}" data-h="${h}">` +
+      `<rect width="${w}" height="${h}" fill="transparent"/><use href="#scene-p${kind}"/></g>`
+    );
+  })
+  .join('');
+
+const panel = `<rect x="0" y="4" width="${WIDTH}" height="${HEIGHT - 4}" fill="#0000c4"/>`;
+const uprights = [0, WIDTH - 2].map((x) => `<rect x="${x}" y="4" width="2" height="${HEIGHT - 4}" fill="#5c5cff"/>`).join('');
+const shelves = SHELVES.map((y) => `<rect class="scene-shelf" x="2" y="${y}" width="${WIDTH - 4}" height="2" fill="#5c5cff"/>`).join('');
+---
+
+<svg
+  class="hidden lg:block"
+  viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+  width={WIDTH * UNIT}
+  height={HEIGHT * UNIT}
+  shape-rendering="crispEdges"
+  aria-hidden="true"
+  data-scene={JSON.stringify(runs)}
+  set:html={defs + panel + uprights + shelves + toPaths(grid) + items}
+/>
+
+<script>
+  interface Run {
+    from: number;
+    to: number;
+    top: number;
+    items: Item[];
+  }
+
+  interface Item {
+    el: SVGGElement;
+    kind: string;
+    w: number;
+    h: number;
+    x: number;
+    run: Run;
+  }
+
+  const svg = document.querySelector<SVGSVGElement>('[data-scene]');
+
+  if (svg && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const runs: Run[] = (JSON.parse(svg.dataset.scene!) as number[][]).map(([from, to, top]) => ({ from, to, top, items: [] }));
+
+    const items = [...svg.querySelectorAll<SVGGElement>('.scene-item')].map((el) => {
+      const { run, kind, w, h, x } = el.dataset;
+      const item: Item = { el, kind: kind!, w: Number(w), h: Number(h), x: Number(x), run: runs[Number(run)] };
+      item.run.items.push(item);
+      return item;
+    });
+
+    const moveTo = (item: Item, x: number, y: number) => {
+      item.el.style.transform = `translate(${x}px, ${y}px)`;
+    };
+    const settle = (item: Item) => moveTo(item, item.x, item.run.top - item.h);
+
+    // Tenta o respiro normal entre produtos diferentes e aperta só se a prateleira não comportar.
+    const gapThatFits = (run: Run) => {
+      const width = run.items.reduce((sum, item) => sum + item.w, 0);
+      const changes = run.items.slice(1).filter((item, i) => item.kind !== run.items[i].kind).length;
+      const repeats = run.items.length - 1 - changes;
+      return [3, 2, 1].find((gap) => run.from + width + repeats + changes * gap <= run.to) ?? 0;
+    };
+
+    const arrange = (run: Run) => {
+      const gap = gapThatFits(run);
+      let x = run.from;
+      run.items.forEach((item, i) => {
+        if (i > 0) x += item.kind === run.items[i - 1].kind ? 1 : gap;
+        item.x = x;
+        settle(item);
+        x += item.w;
+      });
+    };
+
+    const exchange = (a: Item, b: Item) => {
+      const [runA, runB] = [a.run, b.run];
+      const [indexA, indexB] = [runA.items.indexOf(a), runB.items.indexOf(b)];
+      runA.items[indexA] = b;
+      runB.items[indexB] = a;
+      [a.run, b.run] = [runB, runA];
+    };
+
+    const swap = (a: Item, b: Item) => {
+      exchange(a, b);
+      if (gapThatFits(a.run) && gapThatFits(b.run)) {
+        arrange(a.run);
+        arrange(b.run);
+      } else {
+        exchange(a, b);
+        settle(a);
+      }
+    };
+
+    const toScene = (event: PointerEvent) => {
+      const box = svg.getBoundingClientRect();
+      const scale = svg.viewBox.baseVal.width / box.width;
+      return { x: (event.clientX - box.left) * scale, y: (event.clientY - box.top) * scale };
+    };
+
+    const itemAt = (dragged: Item, x: number, y: number) =>
+      items
+        .filter((item) => {
+          if (item === dragged) return false;
+          return x >= item.x - 1 && x <= item.x + item.w + 1 && y >= item.run.top - 14 && y <= item.run.top + 2;
+        })
+        .sort((a, b) => Math.abs(a.x + a.w / 2 - x) - Math.abs(b.x + b.w / 2 - x))[0];
+
+    items.forEach((item) => {
+      item.el.addEventListener('pointerdown', (down) => {
+        if (down.button !== 0) return;
+        down.preventDefault();
+
+        const start = toScene(down);
+        const grabX = start.x - item.x;
+        const grabY = start.y - (item.run.top - item.h);
+        let target: Item | undefined;
+
+        // Vai para o fim do desenho para passar por cima dos outros produtos.
+        svg.append(item.el);
+        item.el.classList.add('dragging');
+
+        const onMove = (move: PointerEvent) => {
+          const { x, y } = toScene(move);
+          moveTo(
+            item,
+            Math.round(Math.min(svg.viewBox.baseVal.width - item.w, Math.max(0, x - grabX))),
+            Math.round(Math.min(svg.viewBox.baseVal.height - item.h, Math.max(0, y - grabY))),
+          );
+          const next = itemAt(item, x, y);
+          if (next === target) return;
+          target?.el.classList.remove('target');
+          next?.el.classList.add('target');
+          target = next;
+        };
+
+        const finish = (drop: boolean) => {
+          removeEventListener('pointermove', onMove);
+          removeEventListener('pointerup', onUp);
+          removeEventListener('pointercancel', onCancel);
+          item.el.classList.remove('dragging');
+          target?.el.classList.remove('target');
+          if (drop && target) swap(item, target);
+          else settle(item);
+        };
+        const onUp = () => finish(true);
+        const onCancel = () => finish(false);
+
+        addEventListener('pointermove', onMove);
+        addEventListener('pointerup', onUp);
+        addEventListener('pointercancel', onCancel);
+      });
+    });
+  }
+</script>

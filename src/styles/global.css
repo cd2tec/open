@@ -175,11 +175,9 @@
   /* Easter egg: só existe com teclado e mouse, porque o jogo é nas setas e na barra. */
   .game-trigger {
     display: none;
-    position: absolute;
-    right: 1.25rem;
-    bottom: 100%;
-    width: 36px;
-    height: 30px;
+    position: relative;
+    width: 48px;
+    height: 40px;
     cursor: pointer;
     transition: transform 120ms ease;
   }
@@ -187,6 +185,45 @@
   @media (hover: hover) and (pointer: fine) {
     .game-trigger {
       display: block;
+    }
+
+    .scene-item {
+      cursor: grab;
+    }
+
+    .scene-item.dragging {
+      cursor: grabbing;
+    }
+
+    .scene-item use {
+      transition: transform 100ms ease;
+    }
+
+    .scene-item.target use {
+      transform: translateY(-2px);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .scene-item:not(.dragging) {
+      transition: transform 140ms ease;
+    }
+  }
+
+  /* O chão onde o robô fica parado, e de onde o jogo começa. */
+  @media (hover: hover) and (pointer: fine), (min-width: 64rem) {
+    .game-floor {
+      border-top: 2px solid rgb(255 255 255 / 0.4);
+      padding-top: 0.75rem;
+    }
+  }
+
+  /* Na tela larga ele entra na cena, de frente para o vão da prateleira de baixo. */
+  @media (min-width: 64rem) {
+    .game-trigger {
+      position: absolute;
+      left: 112px;
+      bottom: 0;
     }
   }
 
@@ -196,7 +233,7 @@
 
   .game-bubble {
     position: absolute;
-    right: -0.25rem;
+    left: -0.25rem;
     bottom: calc(100% + 6px);
     padding: 0.1rem 0.6rem;
     border: 1px solid var(--line);
@@ -213,7 +250,7 @@
   .game-bubble::after {
     content: "";
     position: absolute;
-    right: 0.9rem;
+    left: 0.9rem;
     bottom: -4px;
     width: 7px;
     height: 7px;
@@ -294,6 +331,36 @@
     width: 48px;
     height: 40px;
     pointer-events: none;
+  }
+
+  .game-filters {
+    position: absolute;
+  }
+
+  .game-shot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    width: 21px;
+    height: 18px;
+    pointer-events: none;
+    filter: drop-shadow(1px 0 0 #f2f2f2) drop-shadow(-1px 0 0 #f2f2f2) drop-shadow(0 1px 0 #f2f2f2) drop-shadow(0 -1px 0 #f2f2f2);
+  }
+
+  .game-shot svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .game-spark {
+    position: absolute;
+    z-index: 30;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+    animation: game-spark 320ms steps(6) both;
   }
 
   .game-hud {
@@ -522,54 +589,16 @@
     opacity: 0.75;
   }
 
-  /* Etiqueta de gôndola do hero: centavos sobrescritos, como na loja. */
-  .price-tag {
-    display: inline-grid;
-    grid-template-columns: auto auto auto;
-    align-items: start;
-    background: var(--yellow-like);
-    color: #000000;
-    border-radius: 12px;
-    padding: 1rem 1.25rem 0;
-    line-height: 1;
-    font-weight: 800;
-  }
-
-  .price-tag-currency {
-    font-size: clamp(1.25rem, 3vw, 2rem);
-    padding-top: 0.35em;
-    padding-right: 0.25em;
-  }
-
-  .price-tag-value {
-    font-size: clamp(6.5rem, 17vw, 12rem);
-    letter-spacing: -0.05em;
-    line-height: 0.82;
-  }
-
-  .price-tag-cents {
-    font-size: clamp(2rem, 5vw, 3.75rem);
-    letter-spacing: -0.03em;
-    padding-top: 0.08em;
-    padding-left: 0.08em;
-    text-decoration: underline;
-    text-decoration-thickness: 0.1em;
-    text-underline-offset: 0.12em;
-  }
-
-  .price-tag-note {
-    grid-column: 1 / -1;
-    margin: 0.9rem -1.25rem 0;
-    padding: 0.55rem 1.25rem;
-    border-top: 2px solid #000000;
-    font-size: 1.125rem;
-    font-weight: 700;
-    line-height: 1.3;
-  }
-
   .shelf {
     border-top: 6px solid var(--rail);
     padding-top: 1.25rem;
+  }
+}
+
+@keyframes game-spark {
+  to {
+    transform: translate(var(--dx), var(--dy));
+    opacity: 0;
   }
 }
 

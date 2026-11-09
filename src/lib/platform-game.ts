@@ -9,13 +9,72 @@ const DOUBLE_JUMP = 800;
 const MAX_FALL = 1200;
 const FLY_SPEED = 520;
 const FLY_DELAY = 0.2;
-const SOLID = '.btn, .chip, .card-thumb-tag, [data-card], .price-tag, .shelf, .on-blue, footer';
+const SOLID = '.btn, .chip, .card-thumb-tag, [data-card], .game-floor, .scene-shelf, .shelf, .on-blue, footer';
+
+const SHOT_SPEED = 760;
+const SHOT_LIFE = 1.1;
+const SHOT_COOLDOWN = 0.24;
+const SHOT_WIDTH = 21;
+const SHOT_HEIGHT = 18;
+const MAX_SHOTS = 5;
+const SHOOTABLE = 'h1 span, h2, h3, p, img, .btn, .chip, .card-thumb-tag, header a, footer a, a.chip';
+const NEVER_SHOOT = '.cookies, dialog, .game-hud, .game-trigger, [data-scene]';
+
+const HEART = ['.rr.rr.', 'rwrrrrr', 'rrrrrrr', '.rrrrr.', '..rrr..', '...r...'];
+const HEART_COLORS: Record<string, string> = { r: '#e3172f', w: '#f2f2f2' };
+const HEART_SVG =
+  '<svg viewBox="0 0 7 6" shape-rendering="crispEdges" aria-hidden="true">' +
+  HEART.flatMap((row, y) =>
+    [...row].map((c, x) => (HEART_COLORS[c] ? `<rect x="${x}" y="${y}" width="1" height="1" fill="${HEART_COLORS[c]}"/>` : '')),
+  ).join('') +
+  '</svg>';
+
+const SPARK_COLORS = ['#dbff2a', '#e3172f', '#f2f2f2', '#dbff2a'];
+const PIXEL_SIZES = [3, 4, 6, 8];
+
+// Mosaico feito com filtro SVG: suaviza para cada célula representar a média da região, amostra um ponto
+// por célula, estica até preencher e reduz a paleta. O limiar baixo no alfa evita que letra fina suma.
+const FILTERS =
+  '<svg class="game-filters" width="0" height="0" aria-hidden="true">' +
+  PIXEL_SIZES.map((cell) => {
+    const dot = cell % 2 ? 1 : 2;
+    const reach = (cell - dot) / 2;
+    const levels = '<feFuncR type="discrete" tableValues="0 .25 .5 .75 1"/><feFuncG type="discrete" tableValues="0 .25 .5 .75 1"/><feFuncB type="discrete" tableValues="0 .25 .5 .75 1"/><feFuncA type="discrete" tableValues="0 1 1 1"/>';
+    return (
+      `<filter id="eightbit-${cell}" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB">` +
+      `<feGaussianBlur in="SourceGraphic" stdDeviation="${cell / 4}" result="soft"/>` +
+      `<feFlood x="${reach}" y="${reach}" width="${dot}" height="${dot}"/>` +
+      `<feComposite width="${cell}" height="${cell}"/>` +
+      '<feTile result="dots"/>' +
+      '<feComposite in="soft" in2="dots" operator="in"/>' +
+      `<feMorphology operator="dilate" radius="${reach}"/>` +
+      `<feComponentTransfer>${levels}</feComponentTransfer>` +
+      '</filter>'
+    );
+  }).join('') +
+  '</svg>';
 
 interface Platform {
   el: Element;
   left: number;
   right: number;
   top: number;
+}
+
+interface Target {
+  el: HTMLElement;
+  left: number;
+  right: number;
+  top: number;
+  bottom: number;
+}
+
+interface Shot {
+  el: HTMLElement;
+  x: number;
+  y: number;
+  direction: number;
+  age: number;
 }
 
 /** Transforma a página em fase: os botões viram plataformas, e o robô só pisa neles, sem clicar em nada. */
@@ -28,15 +87,19 @@ export function startGame(trigger: HTMLElement): void {
   hud.className = 'game-hud';
   hud.setAttribute('role', 'status');
   hud.innerHTML =
-    '<span>Setas andam, ↓ desce, barra pula. Segure a barra para voar. Esc sai.</span>' +
+    '<span>Setas andam, ↑ pula, segure ↑ para voar, ↓ desce. Barra atira. Esc sai.</span>' +
     '<button type="button" class="chip">Sair</button>';
 
-  document.body.append(sprite, hud);
+  const filters = document.createElement('div');
+  filters.innerHTML = FILTERS;
+
+  document.body.append(sprite, hud, filters);
 
   const origin = trigger.getBoundingClientRect();
   let x = origin.left + scrollX;
   let y = origin.bottom + scrollY - HEIGHT;
-  trigger.hidden = true;
+  // Só some de vista: o lugar dele continua reservado, para o topo da página não pular.
+  trigger.style.visibility = 'hidden';
   (document.activeElement as HTMLElement | null)?.blur();
 
   const keys = { left: false, right: false, down: false };
@@ -52,6 +115,10 @@ export function startGame(trigger: HTMLElement): void {
   let flutterClock = 0;
   let facing = 1;
   let platforms: Platform[] = [];
+  let targets: Target[] = [];
+  const shots: Shot[] = [];
+  let firing = false;
+  let cooldown = 0;
   let ground = 0;
   let last = performance.now();
   let walkClock = 0;
@@ -66,6 +133,93 @@ export function startGame(trigger: HTMLElement): void {
         return { el, left: rect.left + scrollX, right: rect.right + scrollX, top: rect.top + scrollY };
       });
     ground = document.documentElement.scrollHeight;
+    targets = [...document.querySelectorAll<HTMLElement>(SHOOTABLE)]
+      .filter((el) => el.getClientRects().length > 0 && !el.closest(NEVER_SHOOT) && !el.closest('.eightbit'))
+      .map((el) => {
+        const rect = el.getBoundingClientRect();
+        return {
+          el,
+          left: rect.left + scrollX,
+          right: rect.right + scrollX,
+          top: rect.top + scrollY,
+          bottom: rect.bottom + scrollY,
+        };
+      });
+  };
+
+  const removeShot = (index: number) => {
+    shots[index].el.remove();
+    shots.splice(index, 1);
+  };
+
+  const fire = () => {
+    const el = document.createElement('div');
+    el.className = 'game-shot';
+    el.innerHTML = HEART_SVG;
+    document.body.append(el);
+    const startX = facing > 0 ? x + WIDTH : x - SHOT_WIDTH;
+    shots.push({ el, x: startX, y: y + 12, direction: facing, age: 0 });
+  };
+
+  const sparkle = (centerX: number, centerY: number) => {
+    if (reducedMotion) return;
+    for (let i = 0; i < 8; i++) {
+      const spark = document.createElement('div');
+      const angle = (Math.PI * 2 * i) / 8;
+      spark.className = 'game-spark';
+      spark.style.left = `${centerX}px`;
+      spark.style.top = `${centerY}px`;
+      spark.style.background = SPARK_COLORS[i % SPARK_COLORS.length];
+      spark.style.setProperty('--dx', `${Math.round(Math.cos(angle) * 44)}px`);
+      spark.style.setProperty('--dy', `${Math.round(Math.sin(angle) * 44)}px`);
+      spark.addEventListener('animationend', () => spark.remove());
+      document.body.append(spark);
+    }
+  };
+
+  // Quanto maior o elemento, maior o pixel, para o título não virar borrão e o texto miúdo ainda dar para ler.
+  const pixelSize = (el: HTMLElement) => {
+    if (el.matches('img')) return 6;
+    const fontSize = parseFloat(getComputedStyle(el).fontSize);
+    if (fontSize >= 48) return 8;
+    return fontSize >= 22 ? 4 : 3;
+  };
+
+  const transform = (target: Target) => {
+    target.el.classList.add('eightbit');
+    target.el.style.filter = `url(#eightbit-${pixelSize(target.el)})`;
+    targets = targets.filter((t) => !t.el.closest('.eightbit'));
+  };
+
+  const updateShots = (dt: number) => {
+    cooldown = Math.max(0, cooldown - dt);
+    if (firing && cooldown === 0 && shots.length < MAX_SHOTS) {
+      fire();
+      cooldown = SHOT_COOLDOWN;
+    }
+
+    for (let i = shots.length - 1; i >= 0; i--) {
+      const shot = shots[i];
+      shot.age += dt;
+      shot.x += shot.direction * SHOT_SPEED * dt;
+      const wobble = Math.round(Math.sin(shot.age * 22) * 1.5) * 3;
+      shot.el.style.transform = `translate3d(${Math.round(shot.x)}px, ${Math.round(shot.y + wobble)}px, 0)`;
+
+      const right = shot.x + SHOT_WIDTH;
+      const bottom = shot.y + SHOT_HEIGHT;
+      // Se o tiro pega vários ao mesmo tempo, transforma o mais específico.
+      const hit = targets
+        .filter((t) => right > t.left && shot.x < t.right && bottom > t.top && shot.y < t.bottom)
+        .sort((a, b) => (a.right - a.left) * (a.bottom - a.top) - (b.right - b.left) * (b.bottom - b.top))[0];
+
+      if (hit) {
+        transform(hit);
+        sparkle(shot.x + SHOT_WIDTH / 2, shot.y + SHOT_HEIGHT / 2);
+        removeShot(i);
+      } else if (shot.age > SHOT_LIFE || shot.x < -SHOT_WIDTH || shot.x > document.documentElement.clientWidth) {
+        removeShot(i);
+      }
+    }
   };
 
   const boing = (el: Element) => {
@@ -158,6 +312,7 @@ export function startGame(trigger: HTMLElement): void {
     }
     if (!document.querySelector('dialog[open]')) {
       step(dt);
+      updateShots(dt);
       followCamera(dt);
     } else {
       releaseKeys();
@@ -172,7 +327,8 @@ export function startGame(trigger: HTMLElement): void {
     if (code === 'ArrowLeft') keys.left = down;
     else if (code === 'ArrowRight') keys.right = down;
     else if (code === 'ArrowDown') keys.down = down;
-    else if (code === 'Space' || code === 'ArrowUp') {
+    else if (code === 'Space') firing = down;
+    else if (code === 'ArrowUp') {
       if (down && !event.repeat) {
         wantsJump = true;
         jumpHeld = true;
@@ -193,6 +349,7 @@ export function startGame(trigger: HTMLElement): void {
   function releaseKeys() {
     Object.assign(keys, { left: false, right: false, down: false });
     jumpHeld = false;
+    firing = false;
   }
 
   function stop() {
@@ -203,7 +360,15 @@ export function startGame(trigger: HTMLElement): void {
     removeEventListener('resize', measure);
     sprite.remove();
     hud.remove();
-    trigger.hidden = false;
+    shots.forEach((shot) => shot.el.remove());
+    document.querySelectorAll('.game-spark').forEach((spark) => spark.remove());
+    // Ao sair, a página volta a ser o que era.
+    document.querySelectorAll<HTMLElement>('.eightbit').forEach((el) => {
+      el.classList.remove('eightbit');
+      el.style.removeProperty('filter');
+    });
+    filters.remove();
+    trigger.style.visibility = '';
     trigger.focus({ preventScroll: true });
   }
 

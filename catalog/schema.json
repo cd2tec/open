@@ -48,7 +48,7 @@
       "type": "array",
       "uniqueItems": true,
       "items": {
-        "enum": ["claude", "claude-code", "cowork", "chatgpt", "codex", "gemini", "ia-de-bolso"]
+        "enum": ["claude", "claude-code", "cowork", "chatgpt", "chatgpt-work", "codex", "deepseek-harness", "gemini", "ia-de-bolso"]
       }
     },
     "url": {

@@ -54,7 +54,9 @@ export const AGENTS: Record<string, string> = {
   'claude-code': 'Claude Code',
   cowork: 'Cowork',
   chatgpt: 'ChatGPT',
+  'chatgpt-work': 'ChatGPT Work',
   codex: 'Codex',
+  'deepseek-harness': 'DeepSeek Harness',
   gemini: 'Gemini',
   'ia-de-bolso': 'IA de Bolso',
 };

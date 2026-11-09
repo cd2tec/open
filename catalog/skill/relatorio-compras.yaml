@@ -6,7 +6,7 @@ audience: [negocio]
 status: stable
 license: CC-BY-NC-ND-4.0
 license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
-works_with: [claude-code, cowork, codex, chatgpt]
+works_with: [claude, chatgpt-work, deepseek-harness]
 url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/relatorio-compras
 repo: https://github.com/cd2tec/super
 docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md

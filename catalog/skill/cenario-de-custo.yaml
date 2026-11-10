@@ -1,0 +1,23 @@
+slug: cenario-de-custo
+type: skill
+name: Cenário de custo
+tagline: "Simula um aumento de custo do fornecedor: margem e preço sem repasse, repassando o valor e mantendo a margem."
+description: "Simula o impacto de um aumento de custo de fornecedor em um supermercado, com a conta feita por script. Mostra margem e preço em três cenários, sem repasse, repassando o valor e mantendo a margem, com a posição frente ao concorrente quando houver coleta. Funciona com o banco do ERP conectado, com outro MCP de dados ou com arquivo exportado. Use quando a pessoa perguntar e se o custo subir, quanto perco se não repassar, ou quando um fornecedor pedir aumento, mesmo sem citar o nome da skill. Para o que já aconteceu com custo e preço, use relatorio-precos ou relatorio-compras."
+audience: [negocio]
+department: Compras
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/cenario-de-custo
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/cenario-de-custo.webp
+  alt: "Cenário de um reajuste de 8% com a contribuição sem repasse, repassando o valor e mantendo a margem, item a item."
+  caption: "Exemplo com a conta do script da própria skill. Empresa, fornecedor e números fictícios."
+featured: true
+tags: [cd2-super, rotina, compras, custo]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

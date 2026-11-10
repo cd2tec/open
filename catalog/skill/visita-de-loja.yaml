@@ -1,0 +1,23 @@
+slug: visita-de-loja
+type: skill
+name: Visita de loja
+tagline: Prepara a visita a uma loja, com os números dela, o que olhar no salão e as perguntas para o gerente.
+description: "Prepara quem vai visitar uma loja de supermercado, com a conta conferida. Traz os números daquela loja, o que olhar no salão e as perguntas para o gerente. Funciona com o banco do ERP conectado, com outro MCP de dados ou com arquivo exportado. Use quando a pessoa disser que vai visitar uma loja, pedir o roteiro de visita ou o que olhar na loja, mesmo sem citar o nome da skill. Para a leitura de todas as lojas hoje, use briefing-do-dia. Para um indicador a fundo, use o relatorio-* do assunto."
+audience: [negocio]
+department: Loja
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/visita-de-loja
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/visita-de-loja.webp
+  alt: "Preparo da visita a uma loja com a queda de 6,3%, o que olhar no salão e as perguntas para o gerente."
+  caption: "Exemplo com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
+tags: [cd2-super, rotina, loja, visita]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

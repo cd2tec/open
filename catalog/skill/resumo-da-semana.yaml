@@ -1,0 +1,23 @@
+slug: resumo-da-semana
+type: skill
+name: Resumo da semana
+tagline: Fecha a semana com o que subiu e o que caiu e deixa a pauta da reunião de resultados com os números.
+description: "Fecha a semana de um supermercado, com a conta conferida. Traz venda por loja e departamento contra a semana anterior, o que subiu e o que caiu, margem, perdas, ruptura e a pauta com números para a reunião de resultados. Funciona com o banco do ERP conectado, com outro MCP de dados ou com arquivo exportado. Use quando a pessoa pedir o resumo da semana, o fechamento semanal ou a pauta da reunião de segunda, mesmo sem citar o nome da skill. Para a leitura de hoje, use briefing-do-dia. Para acompanhar indicadores em cards e gráficos, use painel-varejo."
+audience: [negocio]
+department: Diretoria
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/resumo-da-semana
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/resumo-da-semana.webp
+  alt: "Resumo da semana com a queda de 9,8% da Loja Sul, venda por loja, margem, perda, ruptura e a pauta da reunião de resultados."
+  caption: "Exemplo com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
+tags: [cd2-super, rotina, diretoria, semana]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

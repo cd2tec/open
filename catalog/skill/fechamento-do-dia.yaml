@@ -1,0 +1,22 @@
+slug: fechamento-do-dia
+type: skill
+name: Fechamento do dia
+tagline: Fecha o dia com o que foi decidido, as pendências, as mensagens para a equipe e as três coisas de amanhã.
+description: "Fecha o dia de quem toca um supermercado, com o que foi decidido, as pendências com dono e data, as mensagens prontas para a equipe e as três coisas de amanhã. Junta o que a pessoa contar com agenda, e-mail, chat e transcrição, quando conectados. Não calcula número do ERP. Use quando a pessoa disser fecha o dia, encerra o dia, o que ficou pendente ou o que faço amanhã, mesmo sem citar o nome da skill. Para a leitura da manhã com os números, use briefing-do-dia."
+audience: [negocio]
+department: Diretoria
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/fechamento-do-dia
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/fechamento-do-dia.webp
+  alt: "Fechamento do dia com o que foi decidido, pendências com dono e data, mensagens prontas e as três coisas de amanhã."
+  caption: "Exemplo do fechamento que a skill entrega na conversa. Empresa e fornecedor fictícios."
+tags: [cd2-super, rotina, diretoria, dia]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

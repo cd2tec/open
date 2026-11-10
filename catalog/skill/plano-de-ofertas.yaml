@@ -2,7 +2,7 @@ slug: plano-de-ofertas
 type: skill
 name: Plano de ofertas
 tagline: Monta a semana de ofertas, com itens por papel, preço, margem, verba, canais e como medir.
-description: "Monta o plano de ofertas da semana ou da campanha de um supermercado, com a conta conferida. Define objetivo, itens por papel (isca, margem, complemento), preço e margem de cada um, verba de fornecedor, calendário, canais e como medir. Funciona com o banco do ERP conectado, com outro MCP de dados ou com arquivo exportado. Use quando a pessoa pedir para montar ofertas, a semana de ofertas, um encarte, uma campanha ou o que colocar em promoção, mesmo sem citar o nome da skill. Para só analisar margem ou o resultado de uma promoção passada, use relatorio-precos. Para escrever os textos, use comunicacao-de-ofertas."
+description: "Monta o plano de ofertas da semana ou da campanha de um supermercado, com a conta conferida. Define objetivo, itens por papel (isca, margem, complemento), preço e margem de cada um, verba de fornecedor, calendário, canais e como medir. Funciona com o banco do ERP conectado, com outro MCP de dados ou com arquivo exportado. Use quando a pessoa pedir para montar ofertas, a semana de ofertas, um encarte, uma campanha ou o que colocar em promoção, mesmo sem citar o nome da skill. Para só analisar margem, use relatorio-precos. Para o resultado de uma oferta passada, use resultado-da-oferta. Para escrever os textos, use comunicacao-de-ofertas."
 audience: [negocio]
 department: Comercial
 status: stable

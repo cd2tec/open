@@ -1,0 +1,23 @@
+slug: resultado-da-oferta
+type: skill
+name: Resultado da oferta
+tagline: "Mostra se a oferta valeu: contribuição antes, durante e depois, canibalização, estoque que sobrou e verba."
+description: "Mostra o que uma oferta de supermercado entregou, com a conta conferida. Traz venda e contribuição antes, durante e depois, canibalização, cupons, estoque que sobrou e verba realizada, contra o plano. Funciona com o banco do ERP conectado, com outro MCP de dados ou com arquivo exportado. Use quando a pessoa perguntar se a oferta deu certo, pedir o fechamento da campanha ou o resultado do encarte, mesmo sem citar o nome da skill. Para só o resultado de promoção por item, sem verba e sem estoque, use relatorio-precos. Para montar a próxima, use plano-de-ofertas."
+audience: [negocio]
+department: Comercial
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/resultado-da-oferta
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/resultado-da-oferta.webp
+  alt: "Resultado da oferta com R$ 6.900,00 a mais de contribuição com a verba, cupons, antes e depois e a contribuição por item."
+  caption: "Exemplo com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
+tags: [cd2-super, rotina, comercial, ofertas]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

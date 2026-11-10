@@ -22,18 +22,26 @@ includes:
   # Na ordem em que aparecem: do maior stakeholder para o menor, com Tecnologia por último.
   - briefing-do-dia
   - sinais-da-operacao
+  - resumo-da-semana
+  - fechamento-do-dia
   - painel-varejo
   - perfil-da-operacao
   - plano-de-ofertas
+  - radar-de-concorrencia
+  - resultado-da-oferta
   - relatorio-vendas
   - relatorio-precos
   - comunicacao-de-ofertas
+  - revisao-de-oferta
   - custo-vrva
   - relatorio-financeiro
   - preparo-de-negociacao
+  - cenario-de-custo
+  - ficha-do-fornecedor
   - relatorio-compras
   - ata-de-negociacao
   - fim-escala-6x1
+  - visita-de-loja
   - relatorio-perdas
   - relatorio-estoque
   - relatorio-fiscal

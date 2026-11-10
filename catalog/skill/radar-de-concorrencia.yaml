@@ -1,0 +1,23 @@
+slug: radar-de-concorrencia
+type: skill
+name: Radar de concorrência
+tagline: Mostra onde o seu preço está acima ou abaixo do concorrente, por item, categoria e concorrente.
+description: "Mostra a posição de preço de um supermercado frente aos concorrentes, com a conta feita por script. Traz índice por item, categoria e concorrente, a partir de coleta própria em planilha ou de encartes e sites públicos. Funciona com o banco do ERP conectado, com outro MCP de dados ou com arquivo exportado. Use quando a pessoa perguntar como está o preço frente ao concorrente, pedir pesquisa de preço, leitura de encarte de concorrente ou posicionamento por categoria, mesmo sem citar o nome da skill. Para a margem e o preço da própria loja, use relatorio-precos."
+audience: [negocio]
+department: Comercial
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/radar-de-concorrencia
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/radar-de-concorrencia.webp
+  alt: "Radar com o preço 2,63% acima da média dos concorrentes, índice por categoria e os itens comparados."
+  caption: "Exemplo com a conta do script da própria skill sobre uma coleta fictícia. Empresa, concorrentes e números fictícios."
+featured: true
+tags: [cd2-super, rotina, comercial, preco, concorrencia]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

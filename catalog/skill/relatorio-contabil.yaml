@@ -3,6 +3,7 @@ type: skill
 name: Relatório contábil
 tagline: Confere balancete, razão e lançamentos, como relatório gerencial e não escrituração oficial.
 audience: [negocio]
+department: Contábil
 status: stable
 license: CC-BY-NC-ND-4.0
 license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.

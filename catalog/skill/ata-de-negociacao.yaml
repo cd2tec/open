@@ -1,0 +1,22 @@
+slug: ata-de-negociacao
+type: skill
+name: Ata de negociação
+tagline: Fecha a visita do fornecedor com acordos, pendências, mensagem de confirmação e o que atualizar no ERP.
+audience: [negocio]
+department: Compras
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/ata-de-negociacao
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/ata-de-negociacao.webp
+  alt: "Ata de visita com três acordos, cada um com o trecho de origem, e pendências com dono e data."
+  caption: "Exemplo de ata feita a partir de anotações coladas na conversa. Empresa e fornecedor fictícios."
+featured: true
+tags: [cd2-super, rotina, compras, fornecedor]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

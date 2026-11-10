@@ -1,7 +1,7 @@
 slug: cd2-super
 type: plugin
 name: Super para o varejo
-tagline: Calculadoras, relatórios e painel da CD2 no seu assistente de IA, com os dados do seu ERP conectados pelo Archeo MCP Creator.
+tagline: Calculadoras, relatórios, painel e rotinas do dia no seu assistente de IA, com os dados do seu ERP conectados pelo Archeo MCP Creator.
 audience: [negocio, tecnico]
 status: stable
 license: CC-BY-NC-ND-4.0
@@ -19,20 +19,27 @@ preview:
   alt: "Painel do Super com o veredito do período, índice de saúde e os totalizadores de venda, ticket, cupons, margem e desconto."
   caption: "Um dos painéis que o Super monta com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
 includes:
-  # Na ordem em que aparecem: contas, relatórios, painel e, por último, a ficha.
-  - fim-escala-6x1
-  - custo-vrva
+  # Na ordem em que aparecem: do maior stakeholder para o menor, com Tecnologia por último.
+  - briefing-do-dia
+  - sinais-da-operacao
+  - painel-varejo
+  - perfil-da-operacao
+  - plano-de-ofertas
   - relatorio-vendas
-  - relatorio-estoque
-  - relatorio-compras
   - relatorio-precos
-  - relatorio-perdas
+  - comunicacao-de-ofertas
+  - custo-vrva
   - relatorio-financeiro
+  - preparo-de-negociacao
+  - relatorio-compras
+  - ata-de-negociacao
+  - fim-escala-6x1
+  - relatorio-perdas
+  - relatorio-estoque
   - relatorio-fiscal
   - relatorio-contabil
-  - painel-varejo
   - ficha-archeo-mcp
-tags: [cd2-super, erp, archeo-mcp-creator, escala, vale-refeicao, vale-alimentacao, supermercado, relatorios]
+tags: [cd2-super, erp, archeo-mcp-creator, escala, vale-refeicao, vale-alimentacao, supermercado, relatorios, rotinas]
 launched_at: 2026-11-07
 updated_at: 2026-11-09
 owner: gabriel

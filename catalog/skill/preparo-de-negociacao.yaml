@@ -1,0 +1,22 @@
+slug: preparo-de-negociacao
+type: skill
+name: Preparo de negociação
+tagline: Prepara a visita de um fornecedor, com compra, custo, serviço, ruptura e o que pedir.
+audience: [negocio]
+department: Compras
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/preparo-de-negociacao
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/preparo-de-negociacao.webp
+  alt: "Preparo da visita de um fornecedor com atendimento, reajuste, ruptura dos itens dele e o que pedir na conversa."
+  caption: "Exemplo de preparo com o ERP conectado pelo Archeo MCP Creator. Empresa, fornecedor e números fictícios."
+featured: true
+tags: [cd2-super, rotina, compras, fornecedor]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

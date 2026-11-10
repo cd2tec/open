@@ -1,0 +1,21 @@
+slug: comunicacao-de-ofertas
+type: skill
+name: Comunicação de ofertas
+tagline: Escreve os textos da oferta por canal, no tom da loja, com período, condições e regras.
+audience: [negocio]
+department: Comercial
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/comunicacao-de-ofertas
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/comunicacao-de-ofertas.webp
+  alt: "Textos da oferta prontos para WhatsApp, cartaz e rádio de loja, com período, condições e o aviso de conferência."
+  caption: "Exemplo dos textos que a skill entrega na conversa. Empresa fictícia."
+tags: [cd2-super, rotina, comercial, ofertas]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

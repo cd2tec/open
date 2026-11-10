@@ -44,6 +44,10 @@
       "minLength": 10,
       "maxLength": 140
     },
+    "department": {
+      "description": "Departamento que mais usa a skill, como no README do Super. Agrupa o que vem no combo.",
+      "enum": ["Diretoria", "Comercial", "Financeiro", "Compras", "RH", "Loja", "Fiscal", "Contábil", "Tecnologia"]
+    },
     "works_with": {
       "type": "array",
       "uniqueItems": true,

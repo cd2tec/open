@@ -1,0 +1,22 @@
+slug: sinais-da-operacao
+type: skill
+name: Sinais da operação
+tagline: Aponta o que mudou e merece atenção, como fornecedor atrasando, custo sem repasse e margem negativa.
+audience: [negocio]
+department: Diretoria
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/sinais-da-operacao
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/sinais-da-operacao.webp
+  alt: "Página com os sinais que passaram do corte: itens abaixo do custo, fornecedores atrasando e custo sem repasse, cada um com uma proposta."
+  caption: "Exemplo dos sinais com o ERP conectado pelo Archeo MCP Creator. Empresa e números fictícios."
+featured: true
+tags: [cd2-super, rotina, diretoria, alertas]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

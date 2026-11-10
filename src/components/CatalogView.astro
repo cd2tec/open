@@ -26,6 +26,13 @@ const visible = entries.filter((e) => matches(e, publico, tipo));
 const HeadingTag = isHome ? 'h2' : 'h1';
 const ShelfTag = isHome ? 'h3' : 'h2';
 const cardTag = isHome ? 'h4' : 'h3';
+const groupedCardTag = isHome ? 'h5' : 'h4';
+
+function byDepartment(items: CatalogEntry[]) {
+  const groups = new Map<string | undefined, CatalogEntry[]>();
+  for (const item of items) groups.set(item.department, [...(groups.get(item.department) ?? []), item]);
+  return [...groups].map(([department, list]) => ({ department, items: list }));
+}
 
 const presentTypes = SHELF_ORDER.filter((t) => entries.some((e) => matches(e, undefined, t)));
 const shelves = SHELF_ORDER.map((t) => {
@@ -34,8 +41,9 @@ const shelves = SHELF_ORDER.map((t) => {
   // O que está num combo aparece na ordem definida pelo plugin.
   const order = combos.flatMap((e) => e.includes ?? []);
   const rank = (e: CatalogEntry) => (order.includes(e.slug) ? order.indexOf(e.slug) : order.length);
-  return { type: t, combos, items: items.filter((e) => !e.includes).sort((a, b) => rank(a) - rank(b)) };
-}).filter((s) => s.combos.length + s.items.length > 0);
+  const parts = items.filter((e) => !e.includes).sort((a, b) => rank(a) - rank(b));
+  return { type: t, combos, parts, groups: byDepartment(parts) };
+}).filter((s) => s.combos.length + s.parts.length > 0);
 
 const audienceChips = [
   { label: 'Todos', value: undefined },
@@ -133,16 +141,28 @@ const agents = Object.keys(AGENTS).filter((a) => visible.some((e) => e.works_wit
                 ))}
               </ul>
             )}
-            {shelf.items.length > 0 && (
+            {shelf.parts.length > 0 && (
               <div class:list={{ 'combo-items': shelf.combos.length > 0 }}>
-                {shelf.combos.length > 0 && <p class="mb-3 font-bold">O que vem no combo</p>}
-                <ul class="grid gap-4 md:grid-cols-2">
-                  {shelf.items.map((entry) => (
-                    <li data-card-item>
-                      <Card entry={entry} headingTag={cardTag} />
-                    </li>
-                  ))}
-                </ul>
+                {shelf.combos.length > 0 && <p class="mb-4 font-bold">O que vem no combo</p>}
+                <div class="space-y-8">
+                  {shelf.groups.map((group) => {
+                    const DepartmentTag = cardTag;
+                    return (
+                      <div data-card-group>
+                        {group.department && (
+                          <DepartmentTag class="mb-3 text-lg font-extrabold tracking-tight">{group.department}</DepartmentTag>
+                        )}
+                        <ul class="grid gap-4 md:grid-cols-2">
+                          {group.items.map((entry) => (
+                            <li data-card-item>
+                              <Card entry={entry} headingTag={group.department ? groupedCardTag : cardTag} />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
@@ -160,6 +180,7 @@ const agents = Object.keys(AGENTS).filter((a) => visible.some((e) => e.works_wit
     const buttons = [...group.querySelectorAll<HTMLButtonElement>('[data-agent]')];
     const items = [...root.querySelectorAll<HTMLElement>('[data-card-item]')];
     const shelves = [...root.querySelectorAll<HTMLElement>('[data-shelf]')];
+    const groups = [...root.querySelectorAll<HTMLElement>('[data-card-group]')];
     const count = root.querySelector<HTMLElement>('[data-count]');
     const links = [...root.querySelectorAll<HTMLAnchorElement>('[data-filter-link]')];
     const known = new Set(buttons.map((b) => b.dataset.agent));
@@ -174,8 +195,8 @@ const agents = Object.keys(AGENTS).filter((a) => visible.some((e) => e.works_wit
         item.hidden = !match;
         if (match) shown += 1;
       });
-      shelves.forEach((shelf) => {
-        shelf.hidden = !shelf.querySelector('[data-card-item]:not([hidden])');
+      [...shelves, ...groups].forEach((block) => {
+        block.hidden = !block.querySelector('[data-card-item]:not([hidden])');
       });
       if (count) count.textContent = `${shown} ${shown === 1 ? 'recurso' : 'recursos'}`;
 

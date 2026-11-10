@@ -3,6 +3,7 @@ type: skill
 name: Relatório de compras
 tagline: Gera relatórios gerenciais de compras, como a curva ABC de abastecimento e os pedidos pendentes, com a conta conferida.
 audience: [negocio]
+department: Compras
 status: stable
 license: CC-BY-NC-ND-4.0
 license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.

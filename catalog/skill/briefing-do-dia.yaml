@@ -2,6 +2,7 @@ slug: briefing-do-dia
 type: skill
 name: Briefing do dia
 tagline: Monta o briefing da manhã, com venda contra a meta, ruptura, validade, contas, agenda e três ações.
+description: "Monta o briefing da manhã de quem toca um supermercado, com a conta conferida. Junta venda de ontem contra a meta e contra o mesmo dia da semana anterior, ruptura de itens A, validade a vencer, contas do dia, agenda de fornecedores e três ações. Funciona com o banco do ERP conectado, com outro MCP de dados ou com um arquivo de venda exportado. Use quando a pessoa perguntar como está o dia, pedir o briefing, o resumo da manhã ou o que olhar primeiro hoje, mesmo sem citar o nome da skill. Para acompanhar indicadores em cards e gráficos, use painel-varejo. Para aprofundar um número, use o relatorio-* do assunto."
 audience: [negocio]
 department: Diretoria
 status: stable

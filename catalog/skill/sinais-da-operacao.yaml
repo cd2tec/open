@@ -2,6 +2,7 @@ slug: sinais-da-operacao
 type: skill
 name: Sinais da operação
 tagline: Aponta o que mudou e merece atenção, como fornecedor atrasando, custo sem repasse e margem negativa.
+description: "Aponta o que mudou e merece atenção na operação de um supermercado, com a conta conferida. Procura fornecedor atrasando, custo que subiu sem repasse, item A em ruptura, item sem giro, margem negativa e cancelamento fora do padrão no caixa. Funciona com o banco do ERP conectado, com outro MCP de dados ou com arquivos exportados, e pode rodar agendada. Use quando a pessoa perguntar o que mudou, o que merece atenção, se tem algo errado ou pedir alertas da operação, mesmo sem citar o nome da skill. Para a leitura geral da manhã, use briefing-do-dia. Para acompanhar em cards e gráficos, use painel-varejo."
 audience: [negocio]
 department: Diretoria
 status: stable

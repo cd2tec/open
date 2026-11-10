@@ -12,6 +12,7 @@ export interface CatalogEntry {
   status: 'stable' | 'beta' | 'archived';
   license: 'MIT' | 'Apache-2.0' | 'CC-BY-4.0' | 'CC-BY-SA-4.0' | 'CC-BY-NC-ND-4.0' | 'gratuita-fechada';
   license_note?: string;
+  description?: string;
   department?: string;
   works_with?: string[];
   url: string;

@@ -2,6 +2,7 @@ slug: preparo-de-negociacao
 type: skill
 name: Preparo de negociação
 tagline: Prepara a visita de um fornecedor, com compra, custo, serviço, ruptura e o que pedir.
+description: "Prepara quem vai receber um fornecedor em um supermercado, com a conta conferida. Junta histórico de compra, custo e variação, nível de serviço, ruptura dos itens dele, participação na categoria, verbas, últimos e-mails, a ata anterior e o que pedir na reunião. Funciona com o banco do ERP conectado, com outro MCP de dados ou com arquivo exportado. Use quando a pessoa disser que um fornecedor vem hoje, que tem visita ou reunião com fornecedor, ou pedir para preparar uma negociação, mesmo sem citar o nome da skill. Para só o relatório de desempenho de fornecedores, use relatorio-compras."
 audience: [negocio]
 department: Compras
 status: stable

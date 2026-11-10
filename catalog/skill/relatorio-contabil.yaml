@@ -2,6 +2,7 @@ slug: relatorio-contabil
 type: skill
 name: Relatório contábil
 tagline: Confere balancete, razão e lançamentos, como relatório gerencial e não escrituração oficial.
+description: "Gera relatórios de conferência contábil de uma empresa de varejo ou distribuição, com a conta conferida. É conferência gerencial, não escrituração. Funciona com o banco do ERP conectado, com outro MCP de dados ou com um arquivo exportado do sistema (CSV ou planilha). Cobre balancete de verificação (saldo anterior, débitos, créditos e saldo atual por conta, em qualquer nível do plano), razão de uma conta, diário por período, demonstração de resultado gerencial, partidas dobradas que não fecham e lançamentos fora do padrão, conciliação entre os módulos e a contabilidade (estoque, contas a pagar e a receber contra a conta contábil) e posição das adições e exclusões do LALUR quando o ERP as controla. Use quando a pessoa pedir balancete, razão, diário, DRE, conferência de lançamentos, conciliação contábil ou LALUR. Não gera livros oficiais nem demonstrações para publicação."
 audience: [negocio]
 department: Contábil
 status: stable

@@ -2,6 +2,7 @@ slug: relatorio-perdas
 type: skill
 name: Relatório de perdas
 tagline: Gera relatórios gerenciais de perdas, como a quebra por motivo e o índice de perda, com a conta conferida.
+description: "Gera relatórios gerenciais de perdas e prevenção de perdas de um varejo ou distribuidora, com a conta conferida. Funciona com o banco do ERP conectado, com outro MCP de dados ou com um arquivo exportado do sistema (CSV ou planilha), e também com números digitados. Cobre quebra por motivo, departamento e produto, percentual de perda sobre a venda, perda identificada (quebras lançadas) e não identificada (ajuste de inventário), vencidos e validade a vencer, ajustes manuais de estoque e exceções de frente de caixa (cancelamentos, descontos, devoluções e trocas por operador). Use quando a pessoa pedir relatório de quebras, perdas, avarias, vencidos, shrink, índice de perda, ajuste de inventário ou auditoria de cancelamentos e descontos no caixa, mesmo sem citar o nome da skill."
 audience: [negocio]
 department: Loja
 status: stable

@@ -2,6 +2,7 @@ slug: relatorio-compras
 type: skill
 name: Relatório de compras
 tagline: Gera relatórios gerenciais de compras, como a curva ABC de abastecimento e os pedidos pendentes, com a conta conferida.
+description: "Gera relatórios gerenciais de compras e abastecimento de um varejo ou distribuidora, com a conta conferida. Funciona com o banco do ERP conectado, com outro MCP de dados ou com um arquivo exportado do sistema (CSV ou planilha), e também com números digitados. Cobre curva ABC de abastecimento (por quantidade ou valor, cruzada com cobertura de estoque), sugestão de compra e reposição, pedidos em aberto e atrasados, nível de serviço do fornecedor (pedido x recebido, prazo), variação de custo de compra, divergência entre pedido e nota e concentração de fornecedores. Use quando a pessoa pedir curva ABC de compras ou de abastecimento, sugestão de pedido, o que comprar, reposição, pedidos pendentes, atraso de fornecedor, desempenho de fornecedor, aumento de custo ou conferência de pedido contra nota, mesmo sem citar o nome da skill."
 audience: [negocio]
 department: Compras
 status: stable

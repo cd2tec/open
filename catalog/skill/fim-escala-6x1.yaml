@@ -2,6 +2,7 @@ slug: fim-escala-6x1
 type: skill
 name: Fim da escala 6x1
 tagline: Calcula o impacto do fim da escala 6x1 na folha e na operação da sua loja.
+description: "Calcula o impacto do fim da escala 6x1 (Emenda Constitucional 141/2026) numa loja ou rede do varejo alimentar. Mostra quantas pessoas a mais contratar, quanto custa por mês e por ano, os setores no semáforo e o que fazer primeiro, com e sem acordo coletivo. Use quando a pessoa falar em escala 6x1, 5x2, fim da 6x1, 40 horas, 42 horas, redução da jornada, EC 141, PEC da jornada, folgas por semana, quantas pessoas vou precisar contratar, quanto vai custar a nova jornada ou como montar a escala da loja, mesmo sem citar o nome da skill."
 audience: [negocio]
 department: RH
 status: stable

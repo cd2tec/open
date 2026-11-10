@@ -2,6 +2,7 @@ slug: perfil-da-operacao
 type: skill
 name: Perfil da operação
 tagline: Mostra o que está conectado, infere lojas e departamentos e gera o bloco de perfil para as outras rotinas.
+description: "Mostra o que o assistente consegue ver da operação de um supermercado e por onde começar. Olha o que está conectado (ERP, agenda, e-mail, arquivos), infere lojas, departamentos e papel, sugere três skills para começar e gera o bloco de perfil para salvar nas instruções do projeto. Use quando a pessoa perguntar o que dá para fazer, por onde começar, o que você consegue ver da minha operação, ou pedir para configurar o plugin, mesmo sem citar o nome da skill. Para os números do dia, use briefing-do-dia."
 audience: [negocio]
 department: Diretoria
 status: stable

@@ -2,6 +2,7 @@ slug: relatorio-fiscal
 type: skill
 name: Relatório fiscal
 tagline: Confere documentos fiscais por CFOP, cabeçalho contra itens e numeração, como relatório gerencial e não documento oficial.
+description: "Gera relatórios de conferência fiscal de um varejo ou distribuidora, com a conta conferida. É conferência gerencial, não documento fiscal. Funciona com o banco do ERP conectado, com outro MCP de dados ou com um arquivo exportado do sistema (CSV ou planilha). Cobre documentos fiscais em resumo por CFOP, CST, alíquota, modelo ou dia e em detalhe por produto ou por nota, conferência de cabeçalho contra itens, entradas e saídas por CFOP, resumo de tributos (ICMS, ICMS-ST, PIS, COFINS, IPI e os campos de IBS, CBS e IS da reforma tributária), sequência de numeração com notas canceladas, inutilizadas e saltos, e inconsistências de cadastro tributário (NCM, CST, CEST, alíquota). Use quando a pessoa pedir relatório de documentos fiscais, notas por CFOP ou por produto, conferência de notas, resumo de impostos, numeração faltando, notas canceladas ou cadastro fiscal inconsistente. Não gera obrigação acessória nem apuração oficial."
 audience: [negocio]
 department: Fiscal
 status: stable

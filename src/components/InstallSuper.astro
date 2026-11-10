@@ -1,0 +1,195 @@
+---
+interface Props {
+  headingTag: 'h2' | 'h3';
+  panelTag: 'h3' | 'h4';
+}
+
+const { headingTag: HeadingTag, panelTag: PanelTag } = Astro.props;
+const RELEASE = 'https://github.com/cd2tec/super/releases/latest/download';
+
+interface Panel {
+  id: string;
+  label: string;
+  intro: string;
+  download?: string;
+  steps?: string[];
+  before?: string;
+  code?: string;
+  after?: string;
+  note?: string;
+}
+
+const panels: Panel[] = [
+  {
+    id: 'claude-code',
+    label: 'Claude Code',
+    intro: 'Dois comandos dentro de uma sessão. A entrega visual sai como artefato quando o Claude oferece esse recurso e, se não, como arquivo HTML.',
+    code: '/plugin marketplace add cd2tec/super\n/plugin install cd2-super@super',
+    note: 'Para atualizar: <code>/plugin marketplace update super</code>. Para receber versões novas sem pedir, abra <code>/plugin</code>, escolha o marketplace <code>super</code> e ligue o auto-update.',
+  },
+  {
+    id: 'claude-cowork',
+    label: 'Claude Cowork',
+    intro: 'No app do Claude, a instalação é pelo ZIP da release. Funciona igual ao Claude Code.',
+    download: 'cd2-super-claude.zip',
+    steps: [
+      '<strong>Só para você:</strong> em Customize &gt; Plugins, faça o upload do ZIP.',
+      '<strong>Para a organização</strong> (Owner ou Primary Owner, planos Team e Enterprise): em Organization settings &gt; Plugins &amp; skills, clique em Add &gt; Upload a plugin e suba o ZIP.',
+      'Na organização, defina quem recebe o plugin em Inventory, no menu da linha do <code>cd2-super</code>.',
+    ],
+    note: 'Para atualizar, baixe o ZIP novo e repita o upload no mesmo lugar.',
+  },
+  {
+    id: 'codex',
+    label: 'Codex',
+    intro: 'Adicione o marketplace e instale o plugin. A entrega visual sai como arquivo HTML, salvo na sua pasta de trabalho.',
+    code: 'codex plugin marketplace add cd2tec/super\ncodex plugin add cd2-super@super',
+    note: 'No app do Codex, depois de adicionar o marketplace, você também pode instalar o <code>cd2-super</code> pelo diretório de plugins, no marketplace <code>super</code>. Para atualizar: <code>codex plugin marketplace upgrade super</code>.',
+  },
+  {
+    id: 'chatgpt-work',
+    label: 'ChatGPT Work',
+    intro: 'O ChatGPT Work existe só nos planos de empresa do ChatGPT, e quem instala é o admin do workspace. Ele usa o mesmo pacote do Codex.',
+    steps: [
+      'Em Workspace settings &gt; Plugins, clique em Add e depois em Import marketplace.',
+      'Em Source, use <code>https://github.com/cd2tec/super</code>. Deixe Path e Branch vazios para acompanhar as atualizações.',
+      'Confira se o <code>cd2-super</code> veio de <code>plugins/codex/cd2-super</code> e defina a política de instalação de cada papel.',
+      'As pessoas do workspace instalam em Plugins, na barra lateral.',
+    ],
+    note: 'No ChatGPT Plus ou no gratuito, os GPTs chegam em breve na GPT Store. Enquanto isso, quem tem o Plus já pode usar o plugin no Codex.',
+  },
+  {
+    id: 'deepseek-harness',
+    label: 'DeepSeek Harness',
+    intro: 'O DeepSeek Harness está em developer preview, e a DeepSeek avisa que pode haver mudanças incompatíveis. O pacote traz as skills e um script que copia tudo para a pasta que o DSH lê.',
+    download: 'cd2-super-dsh.zip',
+    before: 'Descompacte e, na pasta do pacote, rode:',
+    code: 'python3 install.py',
+    note: 'Instala em <code>~/.agents/skills</code>. Só para o projeto atual: <code>python3 install.py --project</code>. Para remover: <code>python3 install.py --remove</code>.',
+  },
+  {
+    id: 'gpt-store',
+    label: 'GPT Store',
+    intro: 'Em breve na GPT Store, um GPT para cada calculadora, para quem usa o ChatGPT Plus ou o gratuito. Não vai precisar instalar nada. Os GPTs valem só para as duas calculadoras: relatórios, painel e ficha ainda não têm GPT.',
+    steps: ['<strong>CD2 Escala 6x1</strong>, para o fim da escala 6x1.', '<strong>CD2 VR/VA: quanto custa</strong>, para o custo do vale.'],
+    after: 'Enquanto isso, o Codex também funciona no ChatGPT Plus: veja a aba Codex.',
+    note: 'O GPT não se conecta ao seu sistema. Para puxar os dados do ERP, use o plugin no Claude ou no Codex, com o Archeo.',
+  },
+];
+---
+
+<section id="instalar" class="install scroll-mt-4" data-install>
+  <HeadingTag class="text-2xl font-extrabold tracking-tight md:text-3xl">Instale o Super onde você já trabalha</HeadingTag>
+  <p class="mt-2 max-w-[68ch]">
+    Toda skill daqui vem no plugin <code>cd2-super</code>, que é o mesmo em todas as plataformas. Muda só a forma de instalar. Depois, é só
+    pedir em português, como você pediria para alguém da equipe.
+  </p>
+  <p class="mt-2 text-sm text-ink-soft">Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.</p>
+
+  <div class="mt-6 flex flex-wrap gap-2" role="tablist" aria-label="Plataformas" data-install-tabs hidden>
+    {
+      panels.map((panel, i) => (
+        <button
+          type="button"
+          class="chip"
+          role="tab"
+          id={`tab-${panel.id}`}
+          aria-controls={`painel-${panel.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+        >
+          {panel.label}
+        </button>
+      ))
+    }
+  </div>
+
+  {
+    panels.map((panel) => (
+      <div class="install-panel" role="tabpanel" id={`painel-${panel.id}`} aria-labelledby={`tab-${panel.id}`} data-install-panel>
+        <div>
+          <PanelTag class="text-xl font-bold tracking-tight">{panel.label}</PanelTag>
+          <p class="mt-2">{panel.intro}</p>
+          {panel.download && (
+            <a class="btn btn-primary mt-4" href={`${RELEASE}/${panel.download}`} data-track="super_baixado" data-origem={panel.id}>
+              Baixar {panel.download}
+            </a>
+          )}
+        </div>
+        <div class="space-y-3">
+          {panel.before && <p>{panel.before}</p>}
+          {panel.steps && (
+            <ol class="list-decimal space-y-2 pl-5">
+              {panel.steps.map((step) => (
+                <li set:html={step} />
+              ))}
+            </ol>
+          )}
+          {panel.code && (
+            <div class="install-code">
+              <pre><code>{panel.code}</code></pre>
+              <button type="button" class="chip" data-install-copy data-track="comando_copiado" data-origem={panel.id} hidden>
+                Copiar
+              </button>
+            </div>
+          )}
+          {panel.after && <p>{panel.after}</p>}
+          {panel.note && <p class="text-sm text-ink-soft" set:html={panel.note} />}
+        </div>
+      </div>
+    ))
+  }
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-install]');
+
+  if (root) {
+    const list = root.querySelector<HTMLElement>('[data-install-tabs]')!;
+    const tabs = [...list.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-install-panel]')];
+
+    // Sem JavaScript, as abas somem e todas as plataformas ficam visíveis em sequência.
+    const select = (index: number, focus = false) => {
+      tabs.forEach((tab, i) => {
+        tab.setAttribute('aria-selected', String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+      });
+      panels.forEach((panel, i) => {
+        panel.hidden = i !== index;
+      });
+      if (focus) tabs[index].focus();
+    };
+
+    list.hidden = false;
+    select(0);
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('keydown', (event) => {
+        const step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+        if (!step) return;
+        event.preventDefault();
+        select((i + step + tabs.length) % tabs.length, true);
+      });
+    });
+
+    if (navigator.clipboard) {
+      root.querySelectorAll<HTMLButtonElement>('[data-install-copy]').forEach((button) => {
+        button.hidden = false;
+        button.addEventListener('click', async () => {
+          const code = button.parentElement!.querySelector('code')!;
+          try {
+            await navigator.clipboard.writeText(code.textContent ?? '');
+            button.textContent = 'Copiado';
+          } catch {
+            // Sem permissão para a área de transferência, deixa o comando selecionado para copiar à mão.
+            getSelection()?.selectAllChildren(code);
+            button.textContent = 'Selecionado';
+          }
+          window.setTimeout(() => (button.textContent = 'Copiar'), 1600);
+        });
+      });
+    }
+  }
+</script>

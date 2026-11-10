@@ -10,11 +10,11 @@ export const TYPES: Record<ResourceType, { singular: string; action: string }> =
   miniapp: { singular: 'Miniapp', action: 'Abrir miniapp' },
   plugin: { singular: 'Plugin', action: 'Ver plugin' },
   software: { singular: 'Software', action: 'Conhecer' },
-  skill: { singular: 'Skill', action: 'Ver skill' },
+  skill: { singular: 'Skill', action: 'Mais info' },
   conteudo: { singular: 'Conteúdo', action: 'Ler' },
 };
 
-export const SHELF_ORDER: ShelfKey[] = ['miniapp', 'skills', 'software', 'conteudo'];
+export const SHELF_ORDER: ShelfKey[] = ['software', 'miniapp', 'skills', 'conteudo'];
 
 export const SHELVES: Record<ShelfKey, { path: string; plural: string; blurb: string; types: ResourceType[] }> = {
   miniapp: {

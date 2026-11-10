@@ -1,0 +1,17 @@
+slug: domingo-fechado
+type: miniapp
+name: "Domingo fechado: quanto custa?"
+tagline: No Espírito Santo, quanto da venda do domingo muda de dia, quanto some e se a economia com equipe cobre a conta, sem cadastro.
+audience: [negocio]
+status: beta
+license: gratuita-fechada
+url: https://calc-domingo.cd2.com.br
+preview:
+  src: /prints/domingo-fechado.webp
+  alt: "Resultado da calculadora de domingo fechado, com R$ 5,4 mil a menos por mês, 44 domingos fechados em 12 meses e para onde vai a venda do domingo."
+  caption: "Resultado com a loja de exemplo da própria calculadora. Números fictícios."
+featured: true
+tags: [domingo, supermercado, espirito-santo, convencao-coletiva, viabilidade]
+launched_at: 2026-11-09
+updated_at: 2026-11-09
+owner: gabriel

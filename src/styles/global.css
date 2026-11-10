@@ -544,6 +544,89 @@
     overflow: hidden;
   }
 
+  .preview.info {
+    width: min(38rem, calc(100vw - 2rem));
+  }
+
+  .preview-head h2 {
+    align-self: center;
+  }
+
+  .info-body {
+    overflow: auto;
+    padding: 1.25rem;
+  }
+
+  .install {
+    padding: 1.5rem;
+    border: 2px solid var(--rail);
+    border-radius: 1rem;
+    background: var(--surface);
+  }
+
+  @media (min-width: 48rem) {
+    .install {
+      padding: 2rem;
+    }
+  }
+
+  .install code {
+    padding: 0.05rem 0.3rem;
+    border-radius: 4px;
+    background: var(--paper);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.875em;
+    overflow-wrap: anywhere;
+  }
+
+  .install-panel > * {
+    min-width: 0;
+  }
+
+  .install-panel {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (min-width: 48rem) {
+    .install-panel {
+      grid-template-columns: 2fr 3fr;
+      gap: 2.5rem;
+    }
+  }
+
+  .install-code {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #000000;
+    color: #f2f2f2;
+  }
+
+  .install-code pre {
+    margin: 0;
+    padding: 1rem;
+    overflow-x: auto;
+    line-height: 1.7;
+  }
+
+  .install-code code {
+    padding: 0;
+    background: transparent;
+    overflow-wrap: normal;
+  }
+
+  .install-code .chip {
+    display: flex;
+    min-height: 2.25rem;
+    margin: 0 0.5rem 0.5rem auto;
+    border-color: #6b6f78;
+    color: #f2f2f2;
+  }
+
   .on-blue {
     --focus: var(--yellow-like);
   }
@@ -590,7 +673,8 @@
   }
 
   .chip[aria-current="page"],
-  .chip[aria-pressed="true"] {
+  .chip[aria-pressed="true"],
+  .chip[aria-selected="true"] {
     background: var(--ink);
     border-color: var(--ink);
     color: var(--paper);

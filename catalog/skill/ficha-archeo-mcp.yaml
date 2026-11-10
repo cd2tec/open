@@ -2,6 +2,7 @@ slug: ficha-archeo-mcp
 type: skill
 name: Ficha de ferramenta do Archeo MCP Creator
 tagline: Prepara a ficha de uma ferramenta para cadastrar no Archeo MCP Creator da CD2, com o SQL e os parâmetros.
+description: "Prepara, pronta para copiar e colar, a ficha de cadastro de uma nova ferramenta no Archeo MCP Creator da CD2 (tela \"Nova ferramenta\"), com nome técnico, nome de exibição, descrição, schema, SQL com parâmetros posicionais $1..$n, tipo e obrigatoriedade de cada parâmetro, limites por chamada e valores de teste. Com o banco conectado, explora e valida o SQL antes de entregar. Sem conexão, entrega um rascunho marcado como não validada, a partir da estrutura das tabelas que a pessoa informar. Use quando a pessoa quiser criar, cadastrar ou publicar uma ferramenta no Archeo MCP Creator, transformar uma consulta ou um relatório em ferramenta, perguntar \"gere o SQL para cadastrar como ferramenta\" ou \"quais tipos uso nos parâmetros\", mesmo sem citar o nome da skill."
 audience: [tecnico]
 department: Tecnologia
 status: stable

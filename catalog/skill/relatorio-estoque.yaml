@@ -2,6 +2,7 @@ slug: relatorio-estoque
 type: skill
 name: Relatório de estoque
 tagline: Gera relatórios gerenciais de estoque, como posição, Kardex e cobertura, com a conta conferida.
+description: "Gera relatórios gerenciais de estoque de um varejo ou distribuidora, com a conta conferida. Funciona com o banco do ERP conectado, com outro MCP de dados ou com um arquivo exportado do sistema (CSV ou planilha), e também com números digitados. Cobre estoque geral (posição por produto, loja, departamento ou fornecedor, a custo e a venda), Kardex (movimentação com saldo acumulado), análise de lote de inventário (congelado, contado, divergência e acuracidade), cobertura e ruptura, estoque parado, estoque negativo, giro e posição retroativa. Use quando a pessoa pedir relatório de estoque, posição de estoque, Kardex, extrato ou movimentação de produto, balanço, inventário, divergência de contagem, ruptura, cobertura, dias de estoque, excesso, estoque parado ou giro, mesmo sem dizer \"relatório\"."
 audience: [negocio]
 department: Loja
 status: stable

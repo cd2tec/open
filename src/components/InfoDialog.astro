@@ -1,0 +1,43 @@
+<dialog class="preview info" aria-labelledby="info-title" data-info-dialog>
+  <div class="preview-head">
+    <h2 id="info-title" class="text-xl leading-tight font-bold tracking-tight" data-info-title></h2>
+    <button type="button" class="chip shrink-0" data-info-close>Fechar</button>
+  </div>
+  <div class="info-body">
+    <p data-info-description></p>
+    <div class="mt-5 flex flex-wrap gap-2">
+      <a class="btn btn-primary" href="#instalar" data-info-install data-track="instalar_aberto" data-origem="mais_info">Instalar o Super</a>
+      <a class="btn btn-outline" data-info-link data-track="recurso_aberto" data-origem="mais_info">Ver no GitHub</a>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-info-dialog]');
+
+  if (dialog && typeof dialog.showModal === 'function') {
+    const title = dialog.querySelector<HTMLElement>('[data-info-title]')!;
+    const description = dialog.querySelector<HTMLElement>('[data-info-description]')!;
+    const install = dialog.querySelector<HTMLAnchorElement>('[data-info-install]')!;
+    const link = dialog.querySelector<HTMLAnchorElement>('[data-info-link]')!;
+
+    // Sem JavaScript, o botão é um link comum para a skill no GitHub.
+    document.addEventListener('click', (event) => {
+      const trigger = (event.target as Element).closest<HTMLAnchorElement>('[data-info]');
+      if (!trigger || event.metaKey || event.ctrlKey || event.shiftKey) return;
+      event.preventDefault();
+      title.textContent = trigger.dataset.title ?? '';
+      description.textContent = trigger.dataset.description ?? '';
+      link.href = trigger.href;
+      install.dataset.recurso = trigger.dataset.recurso;
+      link.dataset.recurso = trigger.dataset.recurso;
+      dialog.showModal();
+    });
+
+    dialog.querySelector('[data-info-close]')!.addEventListener('click', () => dialog.close());
+    install.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+</script>

@@ -14,6 +14,7 @@ const status = STATUS_LABELS[entry.status];
 const agents = entry.works_with ?? [];
 const preview = entry.preview;
 const combo = entry.includes?.length;
+const installs = entry.type === 'skill' || entry.type === 'plugin';
 const facts = [combo ? `${info.singular}: combo de ${combo} skills` : info.singular, ...entry.audience.map((a) => AUDIENCES[a as Audience].label)];
 if (status) facts.push(status);
 ---
@@ -64,8 +65,20 @@ if (status) facts.push(status);
         </p>
       )
     }
-    <div class:list={['flex flex-wrap items-center gap-x-4 gap-y-2 pt-3', { 'mt-auto': !entry.pro }]}>
-      <a class="btn btn-primary" href={entry.url} aria-label={`${info.action}: ${entry.name}`} data-track="recurso_aberto" data-recurso={entry.slug}>{info.action}</a>
+    <div class:list={[entry.type === 'skill' ? 'grid grid-cols-2 gap-2' : 'flex flex-wrap items-center gap-x-4 gap-y-2', 'pt-3', { 'mt-auto': !entry.pro }]}>
+      <a
+        class:list={['btn', installs ? 'btn-outline' : 'btn-primary']}
+        href={entry.url}
+        aria-label={`${info.action}: ${entry.name}`}
+        aria-haspopup={entry.description ? 'dialog' : undefined}
+        data-info={entry.description ? '' : undefined}
+        data-title={entry.description ? entry.name : undefined}
+        data-description={entry.description}
+        data-track="recurso_aberto"
+        data-recurso={entry.slug}
+      >
+        {info.action}
+      </a>
       {
         preview && (
           <a
@@ -82,6 +95,13 @@ if (status) facts.push(status);
             data-caption={preview.caption}
           >
             Ver maior
+          </a>
+        )
+      }
+      {
+        installs && (
+          <a class="btn btn-primary col-span-2" href="#instalar" aria-label="Instalar o plugin Super" data-track="instalar_aberto" data-recurso={entry.slug} data-origem="card">
+            Instalar o Super
           </a>
         )
       }

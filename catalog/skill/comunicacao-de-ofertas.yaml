@@ -2,6 +2,7 @@ slug: comunicacao-de-ofertas
 type: skill
 name: Comunicação de ofertas
 tagline: Escreve os textos da oferta por canal, no tom da loja, com período, condições e regras.
+description: "Escreve a comunicação das ofertas de um supermercado, por canal e no tom da loja, com período, condições e as regras que toda oferta precisa trazer. Sai texto pronto para encarte, WhatsApp, app, rádio de loja e cartaz, a partir do plano de ofertas ou de uma lista de itens colada. Use quando a pessoa pedir texto de oferta, encarte, mensagem de promoção, locução ou cartaz, mesmo sem citar o nome da skill. Para escolher os itens e os preços, use plano-de-ofertas."
 audience: [negocio]
 department: Comercial
 status: stable

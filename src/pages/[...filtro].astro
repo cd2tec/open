@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Card from '../components/Card.astro';
 import CatalogView from '../components/CatalogView.astro';
 import PreviewDialog from '../components/PreviewDialog.astro';
+import InfoDialog from '../components/InfoDialog.astro';
 import GameTrigger from '../components/GameTrigger.astro';
 import HeroScene from '../components/HeroScene.astro';
 import {
@@ -126,4 +127,5 @@ const description = isHome
     <CatalogView entries={entries} publico={publico} tipo={tipo} />
   </main>
   <PreviewDialog />
+  <InfoDialog />
 </Base>

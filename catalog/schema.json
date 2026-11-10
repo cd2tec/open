@@ -44,6 +44,12 @@
       "minLength": 10,
       "maxLength": 140
     },
+    "description": {
+      "description": "Descrição completa do recurso, mostrada em Mais info. Nas skills, é a do SKILL.md.",
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 1200
+    },
     "department": {
       "description": "Departamento que mais usa a skill, como no README do Super. Agrupa o que vem no combo.",
       "enum": ["Diretoria", "Comercial", "Financeiro", "Compras", "RH", "Loja", "Fiscal", "Contábil", "Tecnologia"]

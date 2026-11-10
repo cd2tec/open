@@ -2,6 +2,7 @@ slug: custo-vrva
 type: skill
 name: Quanto o VR/VA custa de verdade
 tagline: Mostra o custo real do vale-refeição e do vale-alimentação para a sua empresa.
+description: "Calcula quanto o vale-refeição e o vale-alimentação (VR e VA) custam de verdade para uma loja ou rede do varejo alimentar, comparando a taxa e o prazo de cada bandeira com o Decreto 12.712/2025 (teto de 3,6% no MDR e repasse em até 15 dias). Mostra o total acima do permitido por mês e por ano, a taxa acima do teto, o dinheiro parado com as operadoras, as bandeiras no semáforo e o que fazer primeiro. Use quando a pessoa falar em VR, VA, vale-refeição, vale-alimentação, taxa da Alelo, Ticket, Pluxee, Sodexo, VR Benefícios, MDR, teto de 3,6%, prazo de repasse, PAT, Decreto 12.712, maquininha que aceita todos os vales, interoperabilidade ou \"quanto pago de taxa no vale\", mesmo sem citar o nome da skill."
 audience: [negocio]
 department: Financeiro
 status: stable

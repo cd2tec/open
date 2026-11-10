@@ -2,6 +2,7 @@ slug: painel-varejo
 type: skill
 name: Painel de varejo
 tagline: Monta um painel visual da operação do varejo, com totalizadores, linha do tempo, mapa de calor e leitura.
+description: "Monta um painel visual da operação de varejo (totalizadores, índice de saúde de 0 a 100, linha do tempo, mapa de calor por dia e hora, rankings de departamentos, produtos, meios de pagamento e operadores, curva ABC e leitura com alertas), a partir do banco do ERP ou PDV conectado, de outro MCP de dados ou de um arquivo exportado do sistema (CSV ou planilha). Com conexão publica como artefato em modo snapshot, ao vivo ou agendado; sem conexão entrega um snapshot em arquivo HTML. Use quando a pessoa pedir painel, dashboard, visão geral, indicadores, KPIs, score ou \"como está a operação\", mesmo sem dizer \"painel\". Para um painel de vendas com cards e gráficos, use esta skill; para um relatório de vendas com linhas, classes e prova (curva ABC, ranking de clientes, devoluções), use relatorio-vendas ou o relatorio-* do assunto."
 audience: [negocio]
 department: Diretoria
 status: stable

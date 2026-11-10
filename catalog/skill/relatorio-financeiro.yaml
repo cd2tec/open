@@ -2,6 +2,7 @@ slug: relatorio-financeiro
 type: skill
 name: Relatório financeiro
 tagline: Gera relatórios gerenciais financeiros, como o aging de contas a pagar e a receber e o fluxo de caixa.
+description: "Gera relatórios financeiros de um varejo ou distribuidora, com a conta conferida. Funciona com o banco do ERP conectado, com outro MCP de dados ou com um arquivo exportado do sistema (CSV ou planilha), e também com números digitados. Cobre contas a pagar e a receber por vencimento (aging), inadimplência por cliente e por faixa de atraso, fluxo de caixa realizado e projetado, prazos médios e ciclo financeiro, conciliação de cartões (venda contra recebível, taxas e antecipação), posição de bancos e tesouraria e exceções como títulos em duplicidade ou baixas fora do padrão. Use quando a pessoa pedir contas a pagar, contas a receber, títulos vencidos, inadimplência, aging, fluxo de caixa, previsão de caixa, prazo médio, ciclo financeiro, conciliação de cartão ou taxa de adquirente, mesmo sem dizer \"relatório\"."
 audience: [negocio]
 department: Financeiro
 status: stable

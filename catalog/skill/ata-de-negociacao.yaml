@@ -2,6 +2,7 @@ slug: ata-de-negociacao
 type: skill
 name: Ata de negociação
 tagline: Fecha a visita do fornecedor com acordos, pendências, mensagem de confirmação e o que atualizar no ERP.
+description: "Fecha uma visita ou reunião com fornecedor de um supermercado a partir da transcrição ou da anotação colada. Entrega acordos de preço, prazo, verba e ações em loja, pendências com dono e data, mensagem de confirmação ao fornecedor, resumo para o time e a lista do que atualizar no ERP. Use quando a pessoa pedir ata, resumo da visita, para fechar a reunião com o fornecedor ou colar uma transcrição de negociação, mesmo sem citar o nome da skill. Para se preparar antes da visita, use preparo-de-negociacao."
 audience: [negocio]
 department: Compras
 status: stable

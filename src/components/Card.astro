@@ -53,11 +53,11 @@ const infoData = entry.description
       )}
       <div class="flex min-w-0 flex-1 flex-col gap-1 p-3">
         <HeadingTag class="text-[0.9375rem] leading-snug font-bold tracking-tight">{entry.name}</HeadingTag>
-        <p class="pb-1 text-[0.8125rem] leading-[1.35] text-ink-soft">{entry.tagline}</p>
-        <a class="btn btn-outline btn-mini mt-auto self-start" href={entry.url} aria-label={`${info.action}: ${entry.name}`} aria-haspopup="dialog" {...infoData} data-track="recurso_aberto" data-recurso={entry.slug} data-origem="card">
-          {info.action}
-        </a>
+        <p class="text-[0.8125rem] leading-[1.35] text-ink-soft">{entry.tagline}</p>
       </div>
+      <a class="card-mask" href={entry.url} aria-label={`${info.action}: ${entry.name}`} aria-haspopup="dialog" {...infoData} data-track="recurso_aberto" data-recurso={entry.slug} data-origem="card">
+        <span class="btn btn-human btn-mini">{info.action}</span>
+      </a>
     </>
   ) : (
   <>

@@ -133,11 +133,29 @@
     font-size: 0.8125rem;
   }
 
-  /* O card inteiro abre a modal, então o botão pode ser pequeno mesmo no toque. */
-  .card-compact .btn-mini::after {
-    content: "";
+  /* A máscara cobre o card inteiro: invisível até o mouse chegar, mas sempre clicável, então no toque basta tocar no card. */
+  .card-mask {
     position: absolute;
     inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(0 0 0 / 0.6);
+    border-radius: inherit;
+    opacity: 0;
+    text-decoration: none;
+    transition: opacity 140ms ease;
+  }
+
+  .card-mask:focus-visible {
+    opacity: 1;
+    outline-offset: -3px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-compact:hover .card-mask {
+      opacity: 1;
+    }
   }
 
   .card-compact-thumb {

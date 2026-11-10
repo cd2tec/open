@@ -154,10 +154,10 @@ const agents = Object.keys(AGENTS).filter((a) => visible.some((e) => e.works_wit
                         {group.department && (
                           <DepartmentTag class="mb-3 text-lg font-extrabold tracking-tight">{group.department}</DepartmentTag>
                         )}
-                        <ul class="grid gap-4 md:grid-cols-2">
+                        <ul class:list={['grid', shelf.type === 'skills' ? 'gap-3 md:grid-cols-3' : 'gap-4 md:grid-cols-2']}>
                           {group.items.map((entry) => (
                             <li data-card-item>
-                              <Card entry={entry} headingTag={group.department ? groupedCardTag : cardTag} />
+                              <Card entry={entry} headingTag={group.department ? groupedCardTag : cardTag} compact={entry.type === 'skill'} />
                             </li>
                           ))}
                         </ul>

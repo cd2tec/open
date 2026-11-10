@@ -126,6 +126,51 @@
     border-color: var(--rail);
   }
 
+  .btn-mini {
+    min-height: 1.875rem;
+    padding: 0.1rem 0.75rem;
+    border-width: 1px;
+    font-size: 0.8125rem;
+  }
+
+  /* O card inteiro abre a modal, então o botão pode ser pequeno mesmo no toque. */
+  .card-compact .btn-mini::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .card-compact-thumb {
+    position: relative;
+    flex: 0 0 6.5rem;
+    border-right: 1px solid var(--line);
+  }
+
+  .card-compact-thumb img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left top;
+  }
+
+  .card-compact-thumb .card-thumb-tag {
+    right: 0.25rem;
+    bottom: 0.25rem;
+    padding-inline: 0.4rem;
+    font-size: 0.625rem;
+  }
+
+  @media (min-width: 48rem) {
+    .card-compact-thumb {
+      flex: none;
+      aspect-ratio: 5 / 2;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+  }
+
   .card-thumb {
     position: relative;
     display: block;
@@ -155,9 +200,15 @@
 
   /* O traço azul sai do card do plugin e abraça o que vem dentro dele. */
   .combo-items {
-    margin-left: 1.5rem;
-    padding: 1rem 0 0 1rem;
+    padding: 1rem 0 0 0.75rem;
     border-left: 2px solid var(--rail);
+  }
+
+  @media (min-width: 48rem) {
+    .combo-items {
+      margin-left: 1.5rem;
+      padding-left: 1rem;
+    }
   }
 
   .card-thumb-tag {
@@ -544,8 +595,72 @@
     overflow: hidden;
   }
 
-  .preview.info {
-    width: min(38rem, calc(100vw - 2rem));
+  .info-layout {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  .info-frame {
+    position: relative;
+    background: var(--paper);
+  }
+
+  .info-media img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Na tela larga, print e texto rolam cada um por si, e a modal não muda de altura ao carregar a imagem. */
+  @media (min-width: 48rem) {
+    .preview.info {
+      height: min(46rem, calc(100dvh - 2rem));
+    }
+
+    .info-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      grid-template-rows: minmax(0, 1fr);
+      overflow: hidden;
+    }
+
+    .info-layout:has(> [hidden]) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .info-frame {
+      border-right: 1px solid var(--line);
+    }
+
+    .info-media {
+      position: absolute;
+      inset: 0;
+      overflow: auto;
+    }
+
+    .info-side {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .info-side .info-body {
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+  }
+
+  /* Instalar fica sempre à vista, por mais longa que seja a descrição. */
+  .info-actions {
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--line);
+    background: var(--surface);
   }
 
   .preview-head h2 {

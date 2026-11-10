@@ -1,13 +1,29 @@
 <dialog class="preview info" aria-labelledby="info-title" data-info-dialog>
   <div class="preview-head">
-    <h2 id="info-title" class="text-xl leading-tight font-bold tracking-tight" data-info-title></h2>
+    <div>
+      <ul class="flex flex-wrap gap-x-3 text-sm font-semibold text-ink-soft" data-info-facts></ul>
+      <h2 id="info-title" class="text-xl leading-tight font-bold tracking-tight" data-info-title></h2>
+    </div>
     <button type="button" class="chip shrink-0" data-info-close>Fechar</button>
   </div>
-  <div class="info-body">
-    <p data-info-description></p>
-    <div class="mt-5 flex flex-wrap gap-2">
-      <a class="btn btn-primary" href="#instalar" data-info-install data-track="instalar_aberto" data-origem="mais_info">Instalar o Super</a>
-      <a class="btn btn-outline" data-info-link data-track="recurso_aberto" data-origem="mais_info">Ver no GitHub</a>
+  <div class="info-layout">
+    <div class="info-frame" data-info-frame>
+      <div class="info-media" tabindex="0" aria-label="Exemplo do resultado" data-info-media>
+        <img alt="" data-info-image />
+      </div>
+      <span class="card-thumb-tag">Dados fictícios</span>
+    </div>
+    <div class="info-side">
+      <div class="info-body">
+        <p class="text-lg leading-snug font-semibold" data-info-tagline></p>
+        <p class="mt-3" data-info-description></p>
+        <p class="mt-3 text-sm text-ink-soft" data-info-works></p>
+        <p class="mt-1 text-sm text-ink-soft" data-info-caption></p>
+      </div>
+      <div class="info-actions">
+        <a class="btn btn-primary" href="#instalar" data-info-install data-track="instalar_aberto" data-origem="mais_info">Instalar o Super</a>
+        <a class="btn btn-outline" data-info-link data-track="recurso_aberto" data-origem="mais_info">Ver no GitHub</a>
+      </div>
     </div>
   </div>
 </dialog>
@@ -16,28 +32,56 @@
   const dialog = document.querySelector<HTMLDialogElement>('[data-info-dialog]');
 
   if (dialog && typeof dialog.showModal === 'function') {
-    const title = dialog.querySelector<HTMLElement>('[data-info-title]')!;
-    const description = dialog.querySelector<HTMLElement>('[data-info-description]')!;
-    const install = dialog.querySelector<HTMLAnchorElement>('[data-info-install]')!;
-    const link = dialog.querySelector<HTMLAnchorElement>('[data-info-link]')!;
+    const part = <T extends HTMLElement>(name: string) => dialog.querySelector<T>(`[data-info-${name}]`)!;
+    const title = part('title');
+    const facts = part('facts');
+    const tagline = part('tagline');
+    const description = part('description');
+    const works = part('works');
+    const caption = part('caption');
+    const frame = part('frame');
+    const media = part('media');
+    const body = dialog.querySelector<HTMLElement>('.info-body')!;
+    const layout = dialog.querySelector<HTMLElement>('.info-layout')!;
+    const image = part<HTMLImageElement>('image');
+    const install = part<HTMLAnchorElement>('install');
+    const link = part<HTMLAnchorElement>('link');
 
     // Sem JavaScript, o botão é um link comum para a skill no GitHub.
     document.addEventListener('click', (event) => {
       const trigger = (event.target as Element).closest<HTMLAnchorElement>('[data-info]');
       if (!trigger || event.metaKey || event.ctrlKey || event.shiftKey) return;
       event.preventDefault();
-      title.textContent = trigger.dataset.title ?? '';
-      description.textContent = trigger.dataset.description ?? '';
+      const data = trigger.dataset;
+      title.textContent = data.title ?? '';
+      facts.replaceChildren(
+        ...(data.facts ?? '').split('|').map((fact) => {
+          const item = document.createElement('li');
+          item.textContent = fact;
+          return item;
+        }),
+      );
+      tagline.textContent = data.tagline ?? '';
+      description.textContent = data.description ?? '';
+      works.textContent = data.works ?? '';
+      caption.textContent = data.caption ?? '';
+      frame.hidden = !data.src;
+      if (data.src) {
+        image.alt = data.alt ?? '';
+        image.src = data.src;
+      }
       link.href = trigger.href;
-      install.dataset.recurso = trigger.dataset.recurso;
-      link.dataset.recurso = trigger.dataset.recurso;
+      install.dataset.recurso = data.recurso;
+      link.dataset.recurso = data.recurso;
       dialog.showModal();
+      [layout, media, body].forEach((box) => (box.scrollTop = 0));
     });
 
-    dialog.querySelector('[data-info-close]')!.addEventListener('click', () => dialog.close());
+    part('close').addEventListener('click', () => dialog.close());
     install.addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', (event) => {
       if (event.target === dialog) dialog.close();
     });
+    dialog.addEventListener('close', () => image.removeAttribute('src'));
   }
 </script>

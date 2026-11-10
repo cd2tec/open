@@ -6,9 +6,10 @@ interface Props {
   entry: CatalogEntry;
   headingTag?: 'h3' | 'h4' | 'h5';
   wide?: boolean;
+  compact?: boolean;
 }
 
-const { entry, headingTag: HeadingTag = 'h3', wide = false } = Astro.props;
+const { entry, headingTag: HeadingTag = 'h3', wide = false, compact = false } = Astro.props;
 const info = TYPES[entry.type];
 const status = STATUS_LABELS[entry.status];
 const agents = entry.works_with ?? [];
@@ -17,16 +18,49 @@ const combo = entry.includes?.length;
 const installs = entry.type === 'skill' || entry.type === 'plugin';
 const facts = [combo ? `${info.singular}: combo de ${combo} skills` : info.singular, ...entry.audience.map((a) => AUDIENCES[a as Audience].label)];
 if (status) facts.push(status);
+// Tudo o que a modal de "Mais info" mostra vem do botão que a abriu.
+const infoData = entry.description
+  ? {
+      'data-info': '',
+      'data-title': entry.name,
+      'data-facts': [...facts, entry.department].filter(Boolean).join('|'),
+      'data-tagline': entry.tagline,
+      'data-description': entry.description,
+      'data-works': agents.length ? `Funciona com ${agents.map((a) => AGENTS[a]).join(', ')}.` : undefined,
+      'data-src': preview?.src,
+      'data-alt': preview?.alt,
+      'data-caption': preview?.caption,
+    }
+  : {};
 ---
 
 <article
   class:list={[
-    'flex h-full flex-col overflow-hidden rounded-xl bg-surface',
-    wide ? 'card-wide border-2 border-rail md:flex-row' : 'border border-line',
+    'flex h-full overflow-hidden rounded-xl bg-surface',
+    compact ? 'card-compact relative border border-line hover:border-rail md:flex-col' : 'flex-col',
+    !compact && (wide ? 'card-wide border-2 border-rail md:flex-row' : 'border border-line'),
   ]}
   data-card
   data-agents={agents.join(' ')}
 >
+  {compact ? (
+    <>
+      {preview && (
+        <div class="card-compact-thumb">
+          <img src={preview.src.replace('/prints/', '/prints/thumb/')} alt="" width="640" height="400" loading="lazy" decoding="async" />
+          <span class="card-thumb-tag">Dados fictícios</span>
+        </div>
+      )}
+      <div class="flex min-w-0 flex-1 flex-col gap-1 p-3">
+        <HeadingTag class="text-[0.9375rem] leading-snug font-bold tracking-tight">{entry.name}</HeadingTag>
+        <p class="pb-1 text-[0.8125rem] leading-[1.35] text-ink-soft">{entry.tagline}</p>
+        <a class="btn btn-outline btn-mini mt-auto self-start" href={entry.url} aria-label={`${info.action}: ${entry.name}`} aria-haspopup="dialog" {...infoData} data-track="recurso_aberto" data-recurso={entry.slug} data-origem="card">
+          {info.action}
+        </a>
+      </div>
+    </>
+  ) : (
+  <>
   {
     preview && (
       <a
@@ -71,9 +105,7 @@ if (status) facts.push(status);
         href={entry.url}
         aria-label={`${info.action}: ${entry.name}`}
         aria-haspopup={entry.description ? 'dialog' : undefined}
-        data-info={entry.description ? '' : undefined}
-        data-title={entry.description ? entry.name : undefined}
-        data-description={entry.description}
+        {...infoData}
         data-track="recurso_aberto"
         data-recurso={entry.slug}
       >
@@ -107,4 +139,6 @@ if (status) facts.push(status);
       }
     </div>
   </div>
+  </>
+  )}
 </article>

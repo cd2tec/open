@@ -1,0 +1,17 @@
+slug: sac-novo-decreto
+type: miniapp
+name: Meu SAC está no novo decreto?
+tagline: Dez perguntas sobre o Decreto 13.135/2026, com nota de 0 a 100 e o que corrigir, sem cadastro. Diz antes se a regra vale para a sua empresa.
+audience: [negocio]
+status: beta
+license: gratuita-fechada
+url: https://calc-sac.cd2.com.br
+preview:
+  src: /prints/sac-novo-decreto.webp
+  alt: "Resultado do checador do novo SAC, com nota 57 de 100, 4 de 10 itens em dia, a indicação de que para o varejo comum o decreto é referência e o ponto a ponto."
+  caption: "Resultado com a loja de exemplo do próprio checador. Respostas fictícias."
+featured: true
+tags: [sac, atendimento, decreto-13135, conformidade]
+launched_at: 2026-11-11
+updated_at: 2026-11-11
+owner: gabriel

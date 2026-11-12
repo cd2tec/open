@@ -1,0 +1,17 @@
+slug: archeo-mcp-creator
+type: software
+name: Archeo MCP Creator
+tagline: Liga o banco do seu ERP ao seu assistente de IA, só para leitura. É por ele que relatórios e painel do Super puxam os números.
+audience: [tecnico, negocio]
+status: stable
+license: gratuita-fechada
+license_note: Plano grátis com cadastro, até 20 requisições por dia. Para usar mais, há planos pagos.
+url: https://archeo.cd2.com.br
+preview:
+  src: /prints/archeo-mcp-creator.webp
+  alt: "Tela do Archeo MCP Creator com um banco PostgreSQL pronto, o conector online, sugestões do que pedir à IA e o gráfico de chamadas por dia."
+  caption: "Um banco simulado conectado no Archeo MCP Creator. Dados fictícios."
+tags: [archeo, mcp, erp, banco-de-dados, somente-leitura]
+launched_at: 2026-11-12
+updated_at: 2026-11-12
+owner: gabriel

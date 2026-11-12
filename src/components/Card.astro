@@ -17,6 +17,7 @@ const preview = entry.preview;
 const combo = entry.includes?.length;
 const installs = entry.type === 'skill' || entry.type === 'plugin';
 const facts = [combo ? `${info.singular}: combo de ${combo} skills` : info.singular, ...entry.audience.map((a) => AUDIENCES[a as Audience].label)];
+if (entry.license === 'gratuita-fechada') facts.push('Gratuita, código fechado');
 if (status) facts.push(status);
 // Tudo o que a modal de "Mais info" mostra vem do botão que a abriu.
 const infoData = entry.description
@@ -87,6 +88,7 @@ const infoData = entry.description
     </ul>
     <HeadingTag class="text-xl leading-tight font-bold tracking-tight">{entry.name}</HeadingTag>
     <p class="max-w-[60ch]">{entry.tagline}</p>
+    {entry.license_note && <p class="text-sm font-semibold">{entry.license_note}</p>}
     {
       agents.length > 0 && (
         <p class="text-sm text-ink-soft">Funciona com {agents.map((a) => AGENTS[a]).join(', ')}.</p>

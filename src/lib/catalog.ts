@@ -33,7 +33,7 @@ export const SHELVES: Record<ShelfKey, { path: string; plural: string; blurb: st
   software: {
     path: 'software',
     plural: 'Software',
-    blurb: 'Programas para baixar e rodar na sua máquina.',
+    blurb: 'Programas para rodar na sua máquina e serviços da CD2 com plano grátis.',
     types: ['software'],
   },
   conteudo: {

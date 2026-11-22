@@ -1,0 +1,17 @@
+slug: imposto-por-produto
+type: miniapp
+name: Como fica o imposto de cada produto da minha loja?
+tagline: Suba a planilha com o NCM e veja, item a item, a classificação nova, a alíquota de CBS e IBS e o que é cesta básica zerada, sem cadastro.
+audience: [negocio]
+status: beta
+license: gratuita-fechada
+url: https://calc-imposto.cd2.com.br
+preview:
+  src: /prints/imposto-por-produto.webp
+  alt: "Resultado do miniapp do imposto por produto, com 46 de 50 produtos já classificados só pelo NCM, 3 para conferir, 1 com NCM para arrumar e os filtros por situação."
+  caption: "Resultado com a loja de exemplo do próprio miniapp. Produtos fictícios."
+featured: true
+tags: [reforma-tributaria, ncm, cbs, ibs, cadastro]
+launched_at: 2026-11-22
+updated_at: 2026-11-22
+owner: gabriel

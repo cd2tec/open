@@ -46,9 +46,10 @@ includes:
   - relatorio-estoque
   - relatorio-fiscal
   - cbs-ibs-simples
+  - cbs-ibs-regime-regular
   - relatorio-contabil
   - ficha-archeo-mcp
 tags: [cd2-super, erp, archeo-mcp-creator, escala, vale-refeicao, vale-alimentacao, supermercado, relatorios, rotinas]
 launched_at: 2026-11-07
-updated_at: 2026-11-23
+updated_at: 2026-11-24
 owner: gabriel

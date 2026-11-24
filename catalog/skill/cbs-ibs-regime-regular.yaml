@@ -1,0 +1,22 @@
+slug: cbs-ibs-regime-regular
+type: skill
+name: CBS, IBS e Imposto Seletivo no regime regular
+tagline: Calcula a CBS, o IBS e o Imposto Seletivo do Lucro Real ou Presumido com a mesma conta da calculadora oficial da Receita Federal.
+description: "Calcula a CBS, o IBS e o Imposto Seletivo de uma operação do regime regular (Lucro Real ou Lucro Presumido), em NF-e ou NFC-e, com a mesma conta da calculadora oficial da Receita Federal, conferida caso a caso (Lei Complementar 214/2025, reforma tributária). Mostra o total de CBS, de IBS e de IS, item a item, a memória de cálculo e o selo de versão, simula 2027 e a reforma completa com alíquotas de cenário, e sugere a classificação tributária (cClassTrib) a partir do NCM. Use quando a pessoa falar em CBS, IBS, Imposto Seletivo, regime regular, Lucro Real, Lucro Presumido, reforma tributária, quanto sai de CBS e IBS na venda, redução da cesta básica, cerveja ou refrigerante com Imposto Seletivo, cClassTrib, testar o ERP contra a calculadora oficial ou colar o JSON da calculadora da Receita do regime regular, mesmo sem citar o nome da skill. Não serve para o Simples Nacional (use cbs-ibs-simples), para NFS-e e serviços com NBS, para compra governamental, nem para emitir ou validar nota fiscal."
+audience: [negocio, tecnico]
+department: Fiscal
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/cbs-ibs-regime-regular
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/cbs-ibs-regime-regular.webp
+  alt: "Página entregue pela skill com o total de CBS de R$ 7,98, de IBS de R$ 0,08 e de Imposto Seletivo de R$ 4,79 numa NFC-e de cinco itens, marcada como exemplo ilustrativo."
+  caption: "Exemplo da página que a skill entrega, no cenário Em 2027 e com o Imposto Seletivo de exemplo da Receita. Itens e valores fictícios."
+tags: [cd2-super, calculadora, fiscal, reforma-tributaria, regime-regular, lucro-real, lucro-presumido, cbs, ibs, imposto-seletivo]
+launched_at: 2026-11-24
+updated_at: 2026-11-24
+owner: gabriel

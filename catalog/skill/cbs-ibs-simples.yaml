@@ -1,0 +1,22 @@
+slug: cbs-ibs-simples
+type: skill
+name: CBS e IBS no Simples Nacional
+tagline: Calcula a CBS e o IBS de uma operação do Simples Nacional com a mesma conta da calculadora oficial da Receita Federal.
+description: "Calcula a CBS e o IBS de uma operação do Simples Nacional (NFC-e, NF-e ou NFS-e) com a mesma conta da calculadora oficial da Receita Federal, conferida caso a caso, para operações a partir de 2027 (Lei Complementar 214/2025, reforma tributária). Mostra o total de CBS e de IBS, item a item, a memória de cálculo e o selo de versão, e sugere a classificação tributária (cClassTrib) a partir do NCM. Use quando a pessoa falar em CBS, IBS, Simples Nacional, reforma tributária, quanto vou pagar de CBS e IBS no Simples, alíquota efetiva de CBS e IBS do PGDAS, cClassTrib, conferir nota de fornecedor do Simples, crédito de fornecedor do Simples, testar o ERP contra a calculadora oficial ou colar o JSON da calculadora do Simples da Receita, mesmo sem citar o nome da skill. Não serve para o regime regular (lucro real ou presumido), para calcular o DAS ou a alíquota efetiva do Simples a partir do faturamento, nem para emitir ou validar nota fiscal."
+audience: [negocio, tecnico]
+department: Fiscal
+status: stable
+license: CC-BY-NC-ND-4.0
+license_note: Grátis para estudar e para testar na sua empresa, sem prazo. Uso contínuo na empresa é para clientes CD2.
+works_with: [claude, chatgpt-work, deepseek-harness]
+url: https://github.com/cd2tec/super/tree/main/core/cd2-super/skills/cbs-ibs-simples
+repo: https://github.com/cd2tec/super
+docs: https://github.com/cd2tec/super/blob/main/COMMERCIAL.md
+preview:
+  src: /prints/cbs-ibs-simples.webp
+  alt: "Página entregue pela skill com o total de CBS de R$ 36,90 e de IBS de R$ 0,40 numa NFC-e de cinco itens, marcada como exemplo ilustrativo."
+  caption: "Exemplo da página que a skill entrega, com as alíquotas de exemplo da documentação oficial da Receita. Itens e valores fictícios."
+tags: [cd2-super, calculadora, fiscal, reforma-tributaria, simples-nacional, cbs, ibs]
+launched_at: 2026-11-22
+updated_at: 2026-11-23
+owner: gabriel

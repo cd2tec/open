@@ -130,6 +130,22 @@ function toPaths(rows: ArrayLike<string>[]): string {
 }
 
 const kinds = [...new Set(products.map((p) => p.sprite))];
+
+// Para a atenção (ver o script abaixo), cada tipo de produto vira um vetor tirado dos próprios pixels:
+// a fração de cada cor, mais a largura e a altura. Sai centrado na média e com tamanho 1, para que
+// produtos parecidos apontem para o mesmo lado e os diferentes, para lados opostos.
+const features = kinds.map((sprite) => {
+  const cells = [...sprite.join('')].filter((c) => c !== '.');
+  const shares = Object.keys(COLORS).map((color) => cells.filter((c) => c === color).length / cells.length);
+  return [...shares, sprite[0].length / 10, sprite.length / 10];
+});
+const mean = features[0].map((_, i) => features.reduce((sum, feature) => sum + feature[i], 0) / features.length);
+const contents = features.map((feature) => {
+  const diff = feature.map((value, i) => value - mean[i]);
+  const norm = Math.hypot(...diff) || 1;
+  return diff.map((value) => Number((value / norm).toFixed(4)));
+});
+
 const defs = `<defs>${kinds.map((sprite, i) => `<g id="scene-p${i}">${toPaths(sprite)}</g>`).join('')}</defs>`;
 
 const items = products
@@ -157,10 +173,13 @@ const shelves = SHELVES.map((y) => `<rect class="scene-shelf" x="2" y="${y}" wid
   shape-rendering="crispEdges"
   aria-hidden="true"
   data-scene={JSON.stringify(runs)}
+  data-contents={JSON.stringify(contents)}
   set:html={defs + panel + uprights + shelves + toPaths(grid) + items}
 />
 
 <script>
+  import { attend, positionalEncoding } from '../lib/attention';
+
   interface Run {
     from: number;
     to: number;
@@ -246,15 +265,130 @@ const shelves = SHELVES.map((y) => `<rect class="scene-shelf" x="2" y="${y}" wid
         })
         .sort((a, b) => Math.abs(a.x + a.w / 2 - x) - Math.abs(b.x + b.w / 2 - x))[0];
 
+    // Homenagem a "Attention Is All You Need": clicar num produto mostra para quais outros ele "olha".
+    // A conta é a do paper, softmax(q·k / √d_k), e roda de verdade a cada clique (src/lib/attention.ts).
+    // Os vetores não são treinados: o conteúdo vem dos pixels do produto e a posição, do lugar dele na
+    // gôndola, codificado em senos e cossenos. Por isso o desenho muda quando os produtos trocam de lugar.
+
+    // Quanto o conteúdo pesa diante da posição. Com 4, um produto igual do outro lado da gôndola
+    // ainda atrai mais que um produto diferente logo ao lado.
+    const CONTENT_WEIGHT = 4;
+    const contents = (JSON.parse(svg.dataset.contents!) as number[][]).map((content) => content.map((value) => value * CONTENT_WEIGHT));
+    const shelfTops = [...new Set(runs.map((run) => run.top))].sort((a, b) => a - b);
+
+    const embed = (item: Item) => [
+      ...contents[Number(item.kind)],
+      ...positionalEncoding(item.x + item.w / 2, 8),
+      ...positionalEncoding(shelfTops.indexOf(item.run.top), 4),
+    ];
+
+    // A conta daquele clique, para o balão: as três maiores notas e no que o softmax as transforma.
+    // A primeira é sempre o próprio produto, porque ele também entra na conta, como no paper.
+    const proof = (scores: number[], weights: number[]) => {
+      const top = weights
+        .map((_, i) => i)
+        .sort((a, b) => weights[b] - weights[a])
+        .slice(0, 3);
+      const list = (values: string[]) => `[${values.join(' ')} …]`;
+      return (
+        `Conta de verdade, entre ${items.length} produtos:<br>` +
+        `<code>softmax(q·k/√dₖ)</code><br>` +
+        `<code>${list(top.map((i) => scores[i].toFixed(1)))} → ${list(top.map((i) => weights[i].toFixed(2).slice(1)))}</code><br>` +
+        `<cite>Attention Is All You Need · 1706.03762</cite>`
+      );
+    };
+
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const layer = document.createElementNS(SVG_NS, 'g');
+    layer.setAttribute('class', 'scene-attention');
+    const crown = (item: Item) => ({ x: item.x + item.w / 2, y: item.run.top - item.h - 0.5 });
+    let attended: Item | undefined;
+
+    const clearAttention = () => {
+      attended = undefined;
+      layer.replaceChildren();
+      items.forEach((item) => (item.el.style.opacity = ''));
+    };
+
+    // Acende cada produto na medida do peso que recebeu e devolve a conta, para o robô mostrar.
+    const showAttention = (from: Item) => {
+      const { scores, weights } = attend(embed(from), items.map(embed));
+      const strongest = Math.max(...weights.filter((_, i) => items[i] !== from));
+      const start = crown(from);
+      const arcs: SVGPathElement[] = [];
+      items.forEach((item, i) => {
+        if (item === from) return;
+        const relative = weights[i] / strongest;
+        item.el.style.opacity = String(0.4 + 0.6 * relative);
+        if (relative < 0.04) return;
+        // Arco por cima dos produtos, para a linha não riscar a embalagem dos vizinhos.
+        const end = crown(item);
+        const lift = Math.min(7, 2 + Math.hypot(end.x - start.x, end.y - start.y) * 0.18);
+        const arc = document.createElementNS(SVG_NS, 'path');
+        arc.setAttribute('d', `M${start.x} ${start.y}Q${(start.x + end.x) / 2} ${Math.min(start.y, end.y) - lift} ${end.x} ${end.y}`);
+        arc.setAttribute('stroke-opacity', relative.toFixed(3));
+        arcs.push(arc);
+      });
+      layer.replaceChildren(...arcs);
+      // Vai para o fim do desenho para os arcos passarem por cima dos produtos.
+      svg.append(layer);
+      attended = from;
+      return proof(scores, weights);
+    };
+
+    // Quem explica a brincadeira é o robô. Com o mouse na gôndola ele ensina a arrastar e a clicar;
+    // a cada clique mostra a conta daquele produto e, depois do primeiro, para de repetir a dica.
+    // Durante o jogo o botão dele fica invisível, e o balão some junto.
+    const HINT = 'Arraste para mover os produtos. Clique em um e veja a atenção funcionando, o algoritmo que revolucionou a IA.';
+    const robot = document.querySelector<HTMLElement>('[data-game-trigger]');
+    let bubble: HTMLElement | undefined;
+    let learned = false;
+
+    const hush = () => {
+      bubble?.remove();
+      bubble = undefined;
+      robot?.classList.remove('explaining');
+    };
+
+    const say = (html: string) => {
+      hush();
+      if (!robot?.offsetParent) return;
+      bubble = document.createElement('span');
+      bubble.className = 'game-bubble scene-says';
+      bubble.setAttribute('aria-hidden', 'true');
+      bubble.innerHTML = html;
+      bubble.addEventListener('animationend', hush);
+      robot.append(bubble);
+      // Enquanto ele explica, o "Psiu!" do jogo sai da frente.
+      robot.classList.add('explaining');
+    };
+
+    svg.addEventListener('pointerenter', () => {
+      if (!learned) say(HINT);
+    });
+    svg.addEventListener('pointerleave', hush);
+    robot?.addEventListener('click', hush);
+    // Clicar no fundo da gôndola desliga a atenção.
+    svg.addEventListener('pointerdown', (down) => {
+      if ((down.target as Element).closest('.scene-item')) return;
+      clearAttention();
+      hush();
+    });
+
     items.forEach((item) => {
       item.el.addEventListener('pointerdown', (down) => {
         if (down.button !== 0) return;
         down.preventDefault();
+        // Clicar de novo no mesmo produto desliga a atenção.
+        const wasAttended = attended === item;
+        clearAttention();
+        hush();
 
         const start = toScene(down);
         const grabX = start.x - item.x;
         const grabY = start.y - (item.run.top - item.h);
         let target: Item | undefined;
+        let moved = false;
 
         // Vai para o fim do desenho para passar por cima dos outros produtos.
         svg.append(item.el);
@@ -262,6 +396,9 @@ const shelves = SHELVES.map((y) => `<rect class="scene-shelf" x="2" y="${y}" wid
 
         const onMove = (move: PointerEvent) => {
           const { x, y } = toScene(move);
+          // Um tremor do mouse no clique não conta como arrastar.
+          if (!moved && Math.hypot(x - start.x, y - start.y) < 1.5) return;
+          moved = true;
           moveTo(
             item,
             Math.round(Math.min(svg.viewBox.baseVal.width - item.w, Math.max(0, x - grabX))),
@@ -282,6 +419,9 @@ const shelves = SHELVES.map((y) => `<rect class="scene-shelf" x="2" y="${y}" wid
           target?.el.classList.remove('target');
           if (drop && target) swap(item, target);
           else settle(item);
+          if (!drop || moved || wasAttended) return;
+          say(showAttention(item));
+          learned = true;
         };
         const onUp = () => finish(true);
         const onCancel = () => finish(false);

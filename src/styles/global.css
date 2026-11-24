@@ -275,7 +275,32 @@
 
   @media (prefers-reduced-motion: no-preference) {
     .scene-item:not(.dragging) {
-      transition: transform 140ms ease;
+      transition:
+        transform 140ms ease,
+        opacity 220ms ease;
+    }
+
+    .scene-attention path {
+      animation: scene-attention-in 220ms ease;
+    }
+  }
+
+  /* Atenção na gôndola: os arcos saem do produto clicado, mais fortes onde o peso é maior. */
+  .scene-attention {
+    pointer-events: none;
+  }
+
+  .scene-attention path {
+    fill: none;
+    stroke: var(--yellow-like);
+    stroke-width: 0.4;
+    stroke-linecap: round;
+    shape-rendering: geometricPrecision;
+  }
+
+  @keyframes scene-attention-in {
+    from {
+      opacity: 0;
     }
   }
 
@@ -331,6 +356,33 @@
 
   .game-trigger.talk .game-bubble {
     animation: game-bubble 6s ease 3s both;
+  }
+
+  /* A fala do robô sobre a atenção na gôndola: mais de uma linha, e some sozinha. */
+  .game-trigger .game-bubble.scene-says {
+    width: max-content;
+    max-width: 16.5rem;
+    padding-block: 0.3rem;
+    line-height: 1.35;
+    text-align: left;
+    white-space: normal;
+    animation: game-bubble 8s ease both;
+  }
+
+  .scene-says code,
+  .scene-says cite {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .scene-says code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  /* Enquanto ele explica, o "Psiu!" do jogo sai da frente. */
+  .game-trigger.explaining [data-game-bubble] {
+    visibility: hidden;
   }
 
   .game-robo .cape,

@@ -14,7 +14,7 @@ export const TYPES: Record<ResourceType, { singular: string; action: string }> =
   conteudo: { singular: 'Conteúdo', action: 'Ler' },
 };
 
-export const SHELF_ORDER: ShelfKey[] = ['software', 'miniapp', 'skills', 'conteudo'];
+export const SHELF_ORDER: ShelfKey[] = ['software', 'skills', 'miniapp', 'conteudo'];
 
 export const SHELVES: Record<ShelfKey, { path: string; plural: string; blurb: string; types: ResourceType[] }> = {
   miniapp: {
